@@ -1,0 +1,10 @@
+F:\Projects\C#\RobotVision\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe.config
+F:\Projects\C#\RobotVision\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.exe
+F:\Projects\C#\RobotVision\WindowsFormsApp2\bin\Debug\WindowsFormsApp2.pdb
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.AssemblyReference.cache
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.SuggestedBindingRedirects.cache
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResource.cache
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+F:\Projects\C#\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
