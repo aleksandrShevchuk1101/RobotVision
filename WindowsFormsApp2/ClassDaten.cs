@@ -159,7 +159,7 @@ namespace CS_KEHRATEC
 
     }
 
-    public struct InspectionData
+    public struct InspectionPlanData
     {
         public string sInspectionPlanName;
         public string sComment;
@@ -816,8 +816,380 @@ namespace CS_KEHRATEC
         // Data to PLC
         public static int MAX_DBytes = 128;
         public static byte[] DB200_Comunication = new byte[MAX_DBytes];
+        public static byte[] DB202_Comunication = new byte[MAX_DBytes];
 
 
+        // Data from PLC
+        public static int MAX_DW = 64;
+        public static ushort[] Db201_Communication = new ushort[MAX_DW];
 
+        public static bool bWriteSPS = false;
+
+        public static int iSPSReceive;
+        public static int iSPSSend;
+        public static int iOldSPSend;
+
+        public static int RESET_ALL_COUNTER = 0x0004;
+        public static int SLOW_DRIVE_ON = 0x0008;
+        public static int HEIGHT_MES_ON = 0x0010;
+        public static int DEPTH_MES_ON = 0x0020;
+        public static int HOLE_MES_ON = 0x0040;
+        public static int RES_SENSOR_MES_ON = 0x0100;
+        public static int FESTO_MES_ON = 0x0200;
+
+        public static int HOME_POS_REACHED = 0x0001;
+        public static int SPS_STOPPED = 0x0002;
+        public static int ALL_COUNTER_RESETED = 0x0004;
+
+        public static int DATA_READY = 0x0001;
+        public static int THREAD_MES_ON = 0x0002;
+        public static int PART_NOT_FOUND = 0x0004;              // Kein Teil gefunden
+        public static int PART_FOUND = 0x0008;                  // Korrektes Teil gefunden
+        public static int ERROR_PART_FOUND = 0x0010;            // Fremdkцrper gefunden, Lage ist nicht leer
+        public static int ERROR_PART_ANGLE = 0x0020;            // Drehwinkel des Teiles ausser Toleranz
+        public static int ERROR_BASE_OFFSET = 0x0020;           // Error bei Basis Offsetermittlung
+        public static int RES_1 = 0x0040;                       // Reserve
+        public static int RES_2 = 0x0080;                       // Reserve
+        public static int MODE_QUANTITY_RUN = 0x0100;           // Modus "nur Anzahl WT's bearbeiten" 
+        public static int MODE_L1 = 0x0200;                     // Modus "Schwerlastbetrieb, nur Layer 1" 
+        public static int MODE_L1_L2 = 0x0400;                  // Modus "Layer 1 + 2" 
+        public static int RES_3 = 0x0800;                       // Reserve
+        public static int CAMERA1_ACTIV = 0x1000;               // Kamera 1 Aktiv
+        public static int CAMERA2_ACTIV = 0x2000;               // Kamera 2 Aktiv
+
+        public static int CAMERA1_REQ = 0x0001;                 // Kamera1 angefordert
+
+        public static int MODE_QUANTITY_RUN_READY = 0x0020;     // Modus "nur Anzahl WT's bearbeiten" fertig
+        //-----------------------------------------------------------------------------------------------------------
+        // Camera calibration options
+
+        public static string[] sCalTabName = { "caltab_6.descr", "caltab_10.descr", "caltab_30.descr", "caltab_100.descr", "caltab_200.descr", "caltab_400.descr", "caltab_800.descr" };
+        public static string[] sEstimateOption = { "all", "pose", "camera", "alpha", "beta", "gamma", "transx", "transy", "trans", "focus", "kappa", "poly", "poly_rad_2", "poly_rad_4", "poly_rad_6", "poly_tan_2", "cx", "cy", "sx", "sy", "vx", "vy", "vz" };
+        public static string[] sCameraSytemTyp = { "Single", "Stereo" };
+        public static string[] sCameraCalMethod = { "Center Origin", "3 Point" };
+
+        // Options for measurement tools
+        public static string[] sMesTypString1 = { "Std", "Max", "Min", "T-Pkt", "S-Pkt", "Exznt", "M-Linie", "Kante" };
+        public static string[] sMesTypString2 = { "Std", "Direkt" };
+        public static string[] sMesTypString3 = { "Ref=0", "+Tol" };
+        public static string[] sMesTypString4 = { "Sym", "Asym" };
+        public static string[] sMesTypString5 = { "Aussen", "Innen" };
+        public static string[] sSWOption = { "SW_WS", "WS_SW", "Alle" };
+
+        public const double IMAGE_ZOOM_VALUE = 0.65; // Коэффициент увеличения для масштабирования
+
+        public const int MAX_CAMERAS = 6;
+        public const int MAX_LAYER = 1;
+        public const int MAX_CAMERA_TYPES = 3;
+        public const int MAX_UNIT_TYPES = 3;                          // Max. Anzahl Maschinentypen  
+        public const int MAX_MES_UNITS = 8;                           // Max. Anzahl Messeinheiten (Keine kameras)
+        public const int MAX_STRUCT_MESPROGDATA = 50;                 // Max. StrukturgrцЯe fьr Messprogrammdaten  
+        public const int MAX_STRUCT_MESUNITDATA = 10;                 // Max. StrukturgrцЯe fьr Messsystemdaten 
+
+        public const int MAX_TEST_PICTURES = 2000;                    // Максимальное количество тестовых изображений для моделирования
+        public const int MAX_IMAGE_COUNT = 2000;                      // Максимальное количество сохраняемых изображений на камеру
+
+        public const int MAX_WORKER = 12;                             //Максимальное количество рабочих для авторизации
+
+        public const int MAX_PRODUCT_STATE_DATA = 30;                 // Maximale Anzahl Produktstrukturen
+        public const int MAX_INSPECTION_PLAN_TYPES = 16;
+        public const int MAX_OPTIONS = 34;                            // Максимальное количество вариантов измерения, текст находится в "EnglishText.ini"
+        public static int iMaxInspectionPlanTypes = 13;                // Доступно до 13 типов планов тестирования
+        public static int[] iMaxOptions = { 27, 4, 30 };              // Установите параметры, доступные для головной, резьбовой и боковой камер
+        public static int[] iMaxOptionsMesUnit = { 2, 0, 0, 0, 0, 0, 0, 0 }; // Задать параметры, доступные для 8 единиц измерения
+
+        public const string LOGBOOK_FILENAME = "Logbook.txt";
+        public const string DEFAULT_PASSWORD = "*KEHRATEC";
+
+        public static string sDATA_PATH = "..\\..\\..\\VisionControl\\Data\\";
+        public static string sMESSAGE_PATH = "..\\..\\..\\VisionControl\\Messages";
+        public static string sHELP_PATH = "..\\..\\..\\VisionControl\\Help\\";
+        public static string sINSPECTIONPLAN_PATH = "..\\..\\..\\VisionControl\\InspectionPlanFiles\\";
+        public const string SUBDIRECTORY_CALIBRATION_DATA = "CalibrationData";
+        public const string SUBDIRECTORY_REGIONS = "Regions";
+        public const string SUBDIRECTORY_IMAGES = "Images";
+        public const string SUBDIRECTORY_REFERENCE = "Reference";
+        public const string REFERENCE = "Reference";
+
+        //Параметры камеры и позы из калибровки камеры
+        public const string CAM_POSE_CAMERA = "CamPoseCamera";
+        public const string CAM_PAR_CAMERA = "CamParCamera";
+        public const string MAP_IMAGE_CAMERA = "MapImageCamera";
+        public const string RECT_PAR_CAMERA = "RectParCamera";
+        public const string DISPARITY = "DisparityCamera";
+        public const string CAM_POSE_LEFT_TO_RIGHT = "CamPose_LeftToRight";
+        public const string HOMMAT3D_RECT_CCS_TO_WCS = "HomMat3d_RectCCS_to_WCS";
+        public const string RECT_L_POS_RECT_R = "RectLPosRectR";
+        public const string STEREO_CAM_SETUP_MODEL = "StereoCamSetupModel";
+
+
+        //Области для головных камер
+        public const string OUTER_DIAMETER_REGION_HEAD_CAMERA = "OuterDiameterRegionHeadCamera";
+        public const string INNER_DIAMETER_REGION_HEAD_CAMERA = "InnerDiameterRegionHeadCamera";
+        public const string OUTER_CONTOUR_REGION1_HEAD_CAMERA = "OuterContourRegion1HeadCamera";
+        public const string OUTER_CONTOUR_REGION2_HEAD_CAMERA = "OuterContourRegion2HeadCamera";
+        public const string INNER_CONTOUR_REGION1_HEAD_CAMERA = "InnerContourRegion1HeadCamera";
+        public const string INNER_CONTOUR_REGION2_HEAD_CAMERA = "InnerContourRegion2HeadCamera";
+        public const string CONTOUR_REGION_HEAD_CAMERA = "ContourRegionHeadCamera";
+        public const string CONTOUR_MODEL_HEAD_CAMERA = "ContourModelHeadCamera";
+        public const string CENTRICITY_REGION1_HEAD_CAMERA = "CentricityRegion1HeadCamera";
+        public const string CENTRICITY_REGION2_HEAD_CAMERA = "CentricityRegion2HeadCamera";
+        public const string BLOB_ANA_REGION1_HEAD_CAMERA = "BlobAnaRegion1HeadCamera";
+        public const string BLOB_ANA_REGION2_HEAD_CAMERA = "BlobAnaRegion2HeadCamera";
+        public const string GRAY_PROFILE_REGION1_HEAD_CAMERA = "GrayProfileRegion1HeadCamera";
+        public const string GRAY_PROFILE_REGION2_HEAD_CAMERA = "GrayProfileRegion2HeadCamera";
+        public const string AREA_REGION_HEAD_CAMERA = "AreaRegionHeadCamera";
+        public const string DIAMETER_REGION1_HEAD_CAMERA = "DiameterRegion1HeadCamera";
+        public const string DIAMETER_REGION2_HEAD_CAMERA = "DiameterRegion2HeadCamera";
+        public const string SHAVING_INPUTREGION_HEAD_CAMERA = "ShavingInputRegionHeadCamera";
+        public const string SHAVING_REGION_HEAD_CAMERA = "ShavingRegionHeadCamera";
+        public const string LENGTH_REGION1_HEAD_CAMERA = "LengthRegion1HeadCamera";
+        public const string LENGTH_REGION2_HEAD_CAMERA = "LengthRegion2HeadCamera";
+        public const string MAIN_MODEL1_HEAD_CAMERA = "MainModel1HeadCamera";
+        public const string MAIN_MODEL2_HEAD_CAMERA = "MainModel2HeadCamera";
+        public const string MAIN_REGION1_REF_HEAD_CAMERA = "MainRegion1RefHeadCamera";
+        public const string MAIN_REGION2_REF_HEAD_CAMERA = "MainRegion2RefHeadCamera";
+
+        //Области для камер с резьбой
+        public const string MAIN_REGION_THREAD_CAMERA = "MainRegionThreadCamera";
+        public const string THREAD_REGION_THREAD_CAMERA = "ThreadRegionThreadCamera";
+        public const string POLYRING_REGION_THREAD_CAMERA = "PolyringRegionThreadCamera";
+        public const string INNER_CONTOUR_REGION_THREAD_CAMERA = "InnerCoutourRegionThreadCamera";
+        public const string REGIONREF_THREAD_CAMERA = "RegionRefThreadCamera";
+        public const string INNER_CONTOUR_MODEL_THREAD_CAMERA = "InnerContourModelThreadCamera";
+
+        //Области для камер
+        public const string SHAVING_REGION1_CAMERA = "ShavingRegion1Camera";
+        public const string SHAVING_REGION2_CAMERA = "ShavingRegion2Camera";
+        public const string SEARCH_REGION_CAMERA = "SearchRegionCamera";
+        public const string NURBS_MAIN_REGION1_CAMERA = "NurbsMainRegion1Camera";
+        public const string NURBS_MAIN_REGION2_CAMERA = "NurbsMainRegion2Camera";
+        public const string MAIN_REGION1_CAMERA = "MainRegion1Camera";
+        public const string MAIN_REGION2_CAMERA = "MainRegion2Camera";
+        public const string EXCLUSION_REGION1_CAMERA = "ExclusionRegion1Camera";
+        public const string EXCLUSION_REGION2_CAMERA = "ExclusionRegion2Camera";
+        public const string MES_POINT_REGION_CAMERA = "MesPointRegionCamera";
+        public const string DISK_REGION1_CAMERA = "DiskRegion1Camera";
+        public const string DISK_REGION2_CAMERA = "DiskRegion2Camera";
+        public const string MAIN_MODEL1_CAMERA = "MainModellCamera";
+        public const string MAIN_MODEL2_CAMERA = "MainModel2Camera";
+        public const string MAIN_MODEL_REGION1_CAMERA = "MainModelRegion1Camera";
+        public const string MAIN_MODEL_REGION2_CAMERA = "MainModelRegion2Camera";
+        public const string MAIN_REGION1_REF_CAMERA = "MainRegion1RefCamera";
+        public const string MAIN_REGION2_REF_CAMERA = "MainRegion2RefCamera";
+        public const string NURBS_EXCLUSION_REGION_CAMERA = "NurbsExclusionRegionCamera";
+
+        public const string GRIP_REGION_CAMERA = "GripRegionCamera";
+        public const string CIRCLE_DIAMETER_REGION_1_CAMERA = "CircleDiameterRegion1Camera";
+        public const string CIRCLE_DIAMETER_REGION_2_CAMERA = "CircleDiameterRegion2Camera";
+        public const string CIRCLE_DISTANCE_REGION_CAMERA = "CircleDistanceRegionCamera";
+        public const string DIAMETER_REGION_1_CAMERA = "DiameterRegion1Camera";
+        public const string DIAMETER_REGION_2_CAMERA = "DiameterRegion2Camera";
+        public const string LENGTH_REGION_1_CAMERA = "LengthRegion1Camera";
+        public const string LENGTH_REGION_2_CAMERA = "LengthRegion2Camera";
+        public const string LENGTH_TO_LINE_REGION1_CAMERA = "LengthToLineRegion1Camera";
+        public const string LENGTH_TO_LINE_REGION2_CAMERA = "LengthToLineRegion2Camera";
+        public const string LENGTH_TO_LINE_REGION3_CAMERA = "LengthToLineRegion3Camera";
+        public const string THREAD_REGION_CAMERA = "ThreadRegionCamera";
+        public const string MESDIAMETER_REGION_CAMERA = "MesDiameterRegionCamera";
+        public const string MESLENGTH_REGION_CAMERA = "MesLengthRegionCamera";
+        public const string CONTOUR_REGION_CAMERA = "ContourRegionCamera";
+        public const string CONTOUR_MODEL_CAMERA = "ContourModelCamera";
+        public const string CURVATURE_REGION_1_CAMERA = "CurvatureRegion1Camera";
+        public const string CURVATURE_REGION_2_CAMERA = "CurvatureRegion2Camera";
+        public const string PHASEANGLE_REGION_CAMERA = "PhaseAngleRegionCamera";
+        public const string HOLES_REGION1_CAMERA = "HolesRegion1Camera";
+        public const string HOLES_REGION2_CAMERA = "HolesRegion2Camera";
+        public const string HOLES_REGION3_CAMERA = "HolesRegion3Camera";
+        public const string CONTOUR_REGION1_CAMERA = "ContourRegion1Camera";
+        public const string CONTOUR_REGION2_CAMERA = "ContourRegion2Camera";
+        public const string CONTOUR_REGION3_CAMERA = "ContourRegion3Camera";
+        public const string CONTOUR_REGION4_CAMERA = "ContourRegion4Camera";
+
+        // i_OP_PictureNr 10 = Большое изображение камеры
+        // i_OP_PictureNr 20 = отображение значения
+        // i_OP_PictureNr 30 = Все изображения
+        // i_OP_PictureNr 40 = Всегда установочное изображение
+        // i_OP_PictureNr 41 = окно для единицы измерения (установочное изображение)
+        // i_OP_PictureNr 42 = окно для управления bibus (установочное изображение)
+        // i_OP_PictureNr 43 = окно для общего. Проверка дисковода (экран настройки)
+        // i_OP_PictureNr 44 = окно для общего. Управление приводом камеры (экран настройки)
+
+        // имя типа вложения
+        public static string sUnitName;
+        public static int MAX_ERROR_WORDS = 3;
+        public static int MAX_TEXT_WORDS = 3;
+        public static ushort[] ushErrorData = new ushort[MAX_ERROR_WORDS];
+        public static ushort[] ushOldErrorData = new ushort[MAX_ERROR_WORDS];
+        public static ushort[] ushTextData = new ushort[MAX_TEXT_WORDS];
+        public static ushort[] ushOldTextData = new ushort[MAX_TEXT_WORDS];
+
+        // Создаем необходимые структуры
+        public static BoxData structBoxData = new BoxData();
+        public static ResultPara[] structResultPara = new ResultPara[MAX_CAMERAS];
+        public static InspectionPlanData structInspectionPlanData = new InspectionPlanData();
+        public static CamPara[] structCamPara = new CamPara[MAX_CAMERAS];
+        public static SystemData structSystemData = new SystemData();
+        public static OptionData structOptionData = new OptionData();
+        public static CalibrationParameter[,] structCalParam = new CalibrationParameter[MAX_CAMERAS, MAX_LAYER];
+        public static ProductStateData[] structProductStateData = new ProductStateData[ClassDaten.MAX_PRODUCT_STATE_DATA];
+        public static RoboterData structRoboterData = new RoboterData();
+        public static VisionData[] structVisionData = new VisionData[MAX_CAMERAS];
+        public static MesProgData[] structMesProgData = new MesProgData[MAX_STRUCT_MESPROGDATA];
+        public static MesUnitData[] structMesUnitData = new MesUnitData[MAX_STRUCT_MESUNITDATA];
+        public static PackCounter structPackCounter = new PackCounter();
+        public static Counter structCounter = new Counter();
+        public static Autorisation[] structAutorisation = new Autorisation[MAX_WORKER];
+        public static TCP_IP_SocketData struct_TCP_IP_Socketdata = new TCP_IP_SocketData();
+        public static MesProgData structMesProgDataCal = new MesProgData();  // Form_23_MesProgCalibration
+        public static MeasurementData[] structBaseOffsets = new MeasurementData[MAX_CAMERAS];
+        public static Password structPassword = new Password();  // Form_80_Password
+        public static SimPara structSimPara = new SimPara();
+
+        // Form_96_AIAO 
+        public static int iAI_Bits = 16;    // Разрешение аналогового входа
+        public static int iAO_Bits = 15;    // Analog Output Auflцsung APCI 3521 15 Bits, 0V .. + 10V unipolar!!
+        public const int MAX_AI_CHANNEL = 4;
+        public const int MAX_AO_CHANNEL = 4;
+
+        static public int[] iAnalogInput = new int[MAX_AI_CHANNEL];
+        static public int[] iAnalogOutput = new int[MAX_AO_CHANNEL];
+
+        // Signale fьr alle Systeme
+        public static uint input_DigitalTriggerCams;            // Triggersignal von LS
+        public static uint input_TriggerCam_1;                  // Triggersignal Camera 1
+        public static uint input_TriggerCam_2;                  // Triggersignal Camera 2
+        public static uint input_TriggerCam_3;                  // Triggersignal Camera 3
+        public static uint input_TriggerCam_4;                  // Triggersignal Camera 4
+        public static uint input_TriggerCam_5;                  // Triggersignal Camera 5
+        public static uint input_TriggerCam_6;                  // Triggersignal Camera 6
+        public static uint input_IncrementSensor;               // Inkrementalgebersignal
+        public static uint input_IO_Sensor;                     // TAW Signal von IO - LS
+
+        public static uint inputChangeBoxOK;                    // Kartonwechsel erfolgt
+        public static uint inputRemovalConveyorReady;           // BTB Auslaufband
+        public static uint inputLS_LinearOutputEmpty;           // Staulichtschranke Linearfцrderer (Leer = 1)
+        public static uint input_Isolator_SensorOn;             // Verreinzelung TAW 
+        public static uint input_Isolator_On;                   // Verreinzelung Aktiv
+        public static uint input_Isolator_Off;                  // Verreinzelung Aus
+        public static uint input_LinearOutputEmpty;             // Staulichtschranke Linearfцrderer (Leer = 1)
+        public static uint input_LinearInputEmpty;              // Staulichtschranke Linearfцrderer (Leer = 1)
+        public static uint inputLS_Preselect;                   // Vereinzelungslichschranke am Einlaufband
+        public static uint inputLS1_Activ;                      // Linearfцrderer 1 aktiv    
+        public static uint inputLS2_Activ;                      // Linearfцrderer 2 aktiv  
+        public static uint inputSpiralOutputEmpty;              // Fьllstand Wendelfцrderer (Leer = 1)
+        public static uint inputAirPressureOK;                  // Luftdruck OK
+
+        public static uint input_LS_Preselect;                  // Vereinzelungslichschranke am Einlaufband
+        public static uint input_SpiralOutputEmpty;             // Fьllstand Wendelfцrderer (Leer = 1)
+        public static uint input_LS_DistanceMes;                // Lichtschranke Distanzmessung
+        public static uint input_LS_IO_Flap;                    // Teil an IO/NIO Klappe
+        public static uint input_Ini_Flap_NIO;                  // Klappe in NIO Position
+        public static uint input_Ini_Flap_IO;                   // Klappe in IO Position
+        public static uint input_LS_IOCount;                    // IO- Zдhllichtschranke
+        public static uint input_E_Stop;                        // Not Aus (0) Emergency Stop
+        public static uint input_SystemDeactivated;             // System deaktiviert
+
+        public static uint inputNIO_1_InPushPos;                // Pusher NIO 1 (Seitenkamera) ausgefahren
+        public static uint inputNIO_1_InBackPos;                // Pusher NIO 1 (Seitenkamera) eingefahren
+        public static uint inputNIO_2_InPushPos;                // Pusher NIO 2 (Kopfkamera) ausgefahren
+        public static uint inputNIO_2_InBackPos;                // Pusher NIO 2 (Kopfkamera) eingefahren
+        public static uint inputIO_InPushPos;                   // Pusher NIO 2 (Kopfkamera) ausgefahren
+        public static uint inputIO_InBackPos;                   // Pusher NIO 2 (Kopfkamera) eingefahren
+
+        public static uint input_OK_SignalQuit;                 // IO/NIO Ergebnis von SPS akzeptiert
+        public static uint input_OK_SignalQuitCam1;             // IO/NIO Ergebnis von SPS akzeptiert Kamera 1
+        public static uint input_OK_SignalQuitCam2;             // IO/NIO Ergebnis von SPS akzeptiert Kamera 2
+        public static uint input_OK_Signal;                     // Gesamtergebnis IO
+        public static uint input_NOK_Signal;                    // Gesamtergebnis NIO
+
+        public static uint input_Height_OK_Signal;              // Ergebnis Hцhenmessung IO
+        public static uint input_Height_NOK_Signal;             // Ergebnis Hцhenmessung NIO
+        public static uint input_Depth_OK_Signal;               // Ergebnis Tiefenmessung IO
+        public static uint input_Depth_NOK_Signal;              // Ergebnis Tiefenmessung NIO
+
+        public static uint input_USV_Alarm;                     // USV Alarm Signal
+        public static uint input_USV_Battery;                   // USV Alarm Battery
+        public static uint input_USV_Charge;                    // USV Alarm Charge
+
+        public static uint output_TriggerCam_1;                 // Triggerausgang
+        public static uint output_TriggerCam_2;                 // Triggerausgang
+        public static uint output_TriggerCam_3;                 // Triggerausgang
+        public static uint output_TriggerCam_4;                 // Triggerausgang
+        public static uint output_TriggerCam_5;                 // Triggerausgang
+        public static uint output_TriggerCam_6;                 // Triggerausgang
+
+        public static uint output_NIO_1_Valve;                  // NIO Dьse, Pusher oder Klappe
+        public static uint output_NIO_2_Valve;                  // NIO Dьse, Pusher oder Klappe
+        public static uint output_IO_Valve;                     // IO Dьse oder Klappe
+
+        public static uint output_IO_Valve1;                    // IO Dьse oder Klappe
+        public static uint output_IO_Valve2;                    // IO Dьse oder Klappe
+        public static uint output_IO_Valve3;                    // IO Dьse oder Klappe
+
+        public static uint output_DriveDisable;                 // Antriebsmotor /Disable
+        public static uint output_DriveDirection;               // Antriebsmotor Richtung
+        public static uint output_DriveBrake;                   // Antriebsmotor /Bremse
+
+        public static uint output_Isolator_On;                  // Vereinzelung aktiv
+        public static uint output_Isolator_Off;                 // Vereinzelung Aus
+
+        public static uint outputFlatlight;                     // Ausgang Fдchenleuchte
+        public static uint outputRinglight;                     // Ausgang Ringleuchte
+
+        public static uint outputRemovalConveyorOn;             // Auslaufband Ein
+        public static uint outputPreselectConveyorOn;           // Vereinzelungsband Ein
+        public static uint outputPreselectNozzleOn;             // Vereinzelungsbanddьse Ein
+        public static uint outputLinearOutput1On;               // Linearfцrderer 1 Ein
+        public static uint outputLinearOutput2On;               // Linearfцrderer 2 Ein
+        public static uint outputSpiralOutputOn;                // Wendelfцrderer Ein
+        public static uint outputSpiralOutputMode;              // Wendelfцrderer Modus ohne Schwingweitensensor
+        public static uint outputBoxOutputOn;                   // Bunker Ein
+        public static uint outputCamReady;                      // Kameraauswertung fertig
+        public static uint outputNoMaterial;                    // Materialmangel
+        public static uint outputPCActive;                      // Messprogramm aktiv
+        public static uint outputChangeBox;                     // Kartonwechsel
+        public static uint outputError;                         // Stцrungsleuchte
+        public static uint outputTriggerWatchdog;               // Lifebit
+        public static uint outputE_Stop_Light;                  // Not - Aus Leuchte (LM)
+        public static uint outputServiceLight;                  // Einrichtlampe
+        public static uint outputEnable;                        // Freigabesignal
+
+        public static uint outputCam1Activ;                     // Kamera aktiv
+        public static uint outputCam2Activ;                     // Kamera aktiv
+        public static uint outputDataReady;                     // Daten liegen an
+        public static uint outputPartFound;                     // Teil gefunden
+        public static uint outputPartNotFound;                  // Teil nicht gefunden
+
+        public static uint output_TriggerQuitCam1;              // Triggerquittierung an SPS Kamera 1
+        public static uint output_TriggerQuitCam2;              // Triggerquittierung an SPS Kamera 2
+        public static uint output_TriggerQuit;                  // Triggerquittierung an SPS
+        public static uint output_NOK_Cam;                      // Ergebnis NIO an SPS
+        public static uint output_OK_Cam;                       // Ergebnis IO an SPS
+        public static uint output_NOK_Cam1;                     // Ergebnis NIO an SPS Kamera 1
+        public static uint output_OK_Cam1;                      // Ergebnis IO an SPS Kamera 1
+        public static uint output_NOK_Cam2;                     // Ergebnis NIO an SPS Kamera 2 
+        public static uint output_OK_Cam2;                      // Ergebnis IO an SPS Kamera 2
+
+        public static uint output_PreselectConveyorOn;          // Vereinzelungsband Ein
+        public static uint output_PreselectNozzleOn;            // Vereinzelungsbanddьse Ein
+
+
+        public static SampleUnion su = new SampleUnion();
+
+
+        static public byte[] StructureToByteArray(object obj)
+        {
+            try
+            {
+                int len = MAr
+
+
+            }
+            catch
+            {
+
+            }
+        }
     }
 }
