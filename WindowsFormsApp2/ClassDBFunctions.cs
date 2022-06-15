@@ -4,9 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WindowsFormsApp2
+namespace CS_KEHRATEC
 {
-    internal class ClassDBFunctions
+    class ClassDBFunctions
     {
+        static string sDB_FileName = ClassDaten.sDATA_PATH + "ApplicationDB.mdb";
+        static string sIniFileName = ClassDaten.sDATA_PATH + "Application.ini";
+        static string sConnection = "";
+
+
+
+
+
     }
 }
