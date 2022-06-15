@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 
 namespace CS_KEHRATEC
@@ -1182,14 +1184,163 @@ namespace CS_KEHRATEC
         {
             try
             {
-                int len = MAr
-
+                int len = Marshal.SizeOf(obj);
+                byte[] arr = new byte[len];
+                IntPtr ptr = Marshal.AllocHGlobal(len);
+                Marshal.StructureToPtr(obj, ptr, false);
+                Marshal.Copy(ptr, arr, 0, len);
+                Marshal.FreeHGlobal(ptr);
+                return arr;
 
             }
             catch
             {
 
             }
+            return null;
         }
+        
+
+        static public void ByteArrayToStructure(byte[] bytearray, ref object obj)
+        {
+            int len = Marshal.SizeOf(obj);
+
+            IntPtr i = Marshal.AllocHGlobal(len);
+            try
+            {
+                Marshal.Copy(bytearray, 0, i, len);
+                obj = Marshal.PtrToStructure(i, obj.GetType());
+                Marshal.FreeHGlobal(i);
+            }
+            catch
+            {
+                Marshal.FreeHGlobal(i);
+            }
+        }
+
+        public static void CreateDirectories(string sInspectionPlanName)
+        {
+            DirectoryInfo Directory;
+            DirectoryInfo SubDirectory;
+
+            string sDirectory = sINSPECTIONPLAN_PATH + sInspectionPlanName;
+
+            try
+            {
+                Directory = new DirectoryInfo(sInspectionPlanName);
+                if (Directory.Exists==false)
+                {
+                    Directory.Create();
+                    SubDirectory = Directory.CreateSubdirectory(ClassDaten.SUBDIRECTORY_IMAGES);
+                    SubDirectory = Directory.CreateSubdirectory(ClassDaten.SUBDIRECTORY_REFERENCE);
+                    SubDirectory = Directory.CreateSubdirectory(ClassDaten.SUBDIRECTORY_REGIONS);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message, "Error DeleteDirectories", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
+        }
+
+        public static void DeleteAllFiles(string sSource)
+        {
+            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
+
+            try
+            {
+                FileInfo[] fi = di.GetFiles(sSource);
+
+                foreach (FileInfo fiTemp in fi)
+                {
+                    File.Delete(fiTemp.Name);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                
+            }
+        
+        }
+
+
+        public static string GetInspectionPlanPath(string sSlash)
+        {
+            string sInspectionPlanPath = sINSPECTIONPLAN_PATH;
+
+            DirectoryInfo Directory;
+
+            Directory = new DirectoryInfo(sInspectionPlanPath);
+
+            if (Directory.Exists==true)
+            {
+                sInspectionPlanPath = Directory.FullName;
+            }
+            return sInspectionPlanPath;
+
+        }
+
+
+        public static void GetMesToolCode(ulong ulMesToolCode)
+        {
+            if ((ulMesToolCode & 0x00000001) == 0x00000001) ClassDaten.structInspectionPlanData.bHeightMeasure = true; else ClassDaten.structInspectionPlanData.bHeightMeasure = false;
+            if ((ulMesToolCode & 0x00000002) == 0x00000002) ClassDaten.structInspectionPlanData.bHeightMeasure = true; else ClassDaten.structInspectionPlanData.bDepthMeasure = false;
+            if ((ulMesToolCode & 0x00000004) == 0x00000004) ClassDaten.structInspectionPlanData.bHoleCheck = true; else ClassDaten.structInspectionPlanData.bHoleCheck = false;
+            if ((ulMesToolCode & 0x00000008) == 0x00000008) ClassDaten.structInspectionPlanData.bThreadCheck = true; else ClassDaten.structInspectionPlanData.bThreadCheck = false;
+            if ((ulMesToolCode & 0x00000010) == 0x00000010) ClassDaten.structInspectionPlanData.bResSensorCheck = true; else ClassDaten.structInspectionPlanData.bResSensorCheck = false;
+            if ((ulMesToolCode & 0x00000020) == 0x00000020) ClassDaten.structInspectionPlanData.bFestoCheck = true; else ClassDaten.structInspectionPlanData.bFestoCheck = false;
+        }
+
+
+        public static void MoveFile(string sSource, string sDestination)
+        {
+            try
+            {
+                File.Copy(sSource, sDestination, true);
+                File.Delete(sSource);
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        public static void MoveAllFiles(string sSource, string sPath)
+        {
+            DirectoryInfo di = new DirectoryInfo(Environment.CurrentDirectory);
+            try
+            {
+                FileInfo[] fi = di.GetFiles(sSource);
+
+
+                foreach(FileInfo fiTemp in fi)
+                {
+                    File.Copy(fiTemp.Name, sPath + fiTemp.Name, true);
+                    File.Delete(fiTemp.Name);
+                
+                }  
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+
+        public static void SetAllDataPathes()
+        {
+            ClassDaten.sDATA_PATH = "..\\..\\..\\"+ClassDaten.sUnitName+"\\Data\\";
+            ClassDaten.sMESSAGE_PATH = "..\\..\\..\\" + ClassDaten.sUnitName + "\\Messages\\";
+            ClassDaten.sHELP_PATH = "..\\..\\..\\" + ClassDaten.sUnitName + "\\Help\\";
+            ClassDaten.sINSPECTIONPLAN_PATH = "..\\..\\..\\" + ClassDaten.sUnitName + "\\InspectionPlanFiles\\";
+        }
+
+
+
     }
 }
