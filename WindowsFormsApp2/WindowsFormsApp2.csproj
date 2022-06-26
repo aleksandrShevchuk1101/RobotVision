@@ -48,11 +48,11 @@
   <ItemGroup>
     <Compile Include="ClassDaten.cs" />
     <Compile Include="ClassDBFunctions.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="Form_01_Main.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Form_01_Main.Designer.cs">
+      <DependentUpon>Form_01_Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
