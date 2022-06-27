@@ -580,6 +580,18 @@ namespace CS_KEHRATEC
 
 
 
+        public static void Dick()
+        {
+
+
+
+
+
+
+
+
+        }
+
 
 
 
