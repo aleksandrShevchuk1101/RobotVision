@@ -580,17 +580,228 @@ namespace CS_KEHRATEC
 
 
 
-        public static void Dick()
+        public static bool LoadRoboterData(string sInspectionPlanName, ref RoboterData structRoboterData)
         {
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectRoboterData + "'" + sInspectionPlanName + "'", conn);
+            OleDbDataReader dr;
+            bool bDataFound = false;
 
 
+            try
+            {
+                conn.Open();
+                dr=cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    structRoboterData.sInspectionPlanName = (string)dr["InspectionPlanName"];
+                    structRoboterData.iTypNr = StrToInt(dr["TypNr"]);
+                    structRoboterData.iOptions = StrToInt(dr["Options"]);
+                    structRoboterData.dLength = StrToDouble(dr["Length"]);
+                    structRoboterData.dWidth = StrToDouble(dr["Width"]);
+                    structRoboterData.dHeight = StrToDouble(dr["Height"]);
+                    structRoboterData.dDiameter = StrToDouble(dr["Diameter"]);
+                    structRoboterData.dRotAngleVertAxis = StrToDouble(dr["RotAngleVertAxis"]);
+                    structRoboterData.dRotAngleHorAxis = StrToDouble(dr["RotAngleHorAxis"]);
+                    structRoboterData.dMaxRotAngle = StrToDouble(dr["MaxRotAngle"]);
+                    structRoboterData.dMinRotAngle = StrToDouble(dr["MinRotAngle"]);
+                    structRoboterData.iGripperNr = StrToInt(dr["GripperNr"]);
+                    structRoboterData.iGripperFingerNr = StrToInt(dr["GripperFingerNr"]);
+                    structRoboterData.dGripAngleHorAxis = StrToDouble(dr["GripAngleHorAxis"]);
+                    structRoboterData.dGripHeight = StrToDouble(dr["GripHeight"]);
+                    structRoboterData.dGripDepth = StrToDouble(dr["GripDepth"]);
+                    structRoboterData.iMax_X = StrToInt(dr["Max_X"]);
+                    structRoboterData.iMax_Y = StrToInt(dr["Max_Y"]);
+                    structRoboterData.dDistance_X = StrToDouble(dr["Distance_X"]);
+                    structRoboterData.dDistance_Y = StrToDouble(dr["Distance_Y"]);
+                    structRoboterData.dWeight = StrToDouble(dr["Weight"]);
+                    structRoboterData.iPrismaSelect = StrToInt(dr["PrismaSelect"]);
+                    bDataFound = true;
+                }
+                dr.Close();
 
+            }
+            catch (Exception exception)
+            {
 
+                MessageBox.Show("Error while readingr Access- Data : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
 
-
-
+            return bDataFound;
 
         }
+
+        public static string GetInspektionsPlanNamefromRoboterData(int iTypNr)
+        {
+            string sInspektionsPlanName = string.Empty;
+            conn = new OleDbConnection(sConnection);
+
+            string sCmd = "SELECT * FROM [RoboterData] WHERE " + "(TypNr= " + iTypNr + ")";
+
+            OleDbCommand cmd = new OleDbCommand(sCmd, conn);
+            OleDbDataReader dr;
+
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    if (iTypNr == StrToInt(dr["TypNr"]))
+                    {
+                        sInspektionsPlanName = (string)dr["InspectionPlanName"];
+                    }
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("No Roboterdata found! " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return sInspektionsPlanName;
+
+        }
+
+        public static bool LoadVisionData(string sInspectionPlanName, ref VisionData[] structVisionData)
+        {
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectVisionData + "'" + sInspectionPlanName + "'", conn);
+            OleDbDataReader dr;
+
+            bool bDataFound = false;
+
+            try
+            {
+                conn.Open();
+                dr= cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    int iCamNr = StrToInt(dr["CameraNr"]);
+                    if (iCamNr>0)
+                    {
+                        structVisionData[iCamNr - 1].sInspectionPlanName = (string)dr["InspectionPlanName"];
+                        structVisionData[iCamNr - 1].iInspectionPlanTyp = StrToInt(dr["InspectionPlanTyp"]);
+                        structVisionData[iCamNr - 1].iCameraNr = StrToInt(dr["CameraNr"]);
+                        structVisionData[iCamNr - 1].iNumLevels = StrToInt(dr["NumLevels"]);
+                        structVisionData[iCamNr - 1].iContrast = StrToInt(dr["Contrast"]);
+                        structVisionData[iCamNr - 1].iMinContrast = StrToInt(dr["MinContrast"]);
+                        structVisionData[iCamNr - 1].dMinScoreMain = StrToDouble(dr["MinScoreMain"]);
+                        structVisionData[iCamNr - 1].dMinScore = StrToDouble(dr["MinScore"]);
+                        structVisionData[iCamNr - 1].dMinScale = StrToDouble(dr["MinScale"]);
+                        structVisionData[iCamNr - 1].dGreediness = StrToDouble(dr["Greediness"]);
+                        structVisionData[iCamNr - 1].iNumMatches = StrToInt(dr["NumMatches"]);
+                        structVisionData[iCamNr - 1].iAquisitionTime = StrToInt(dr["AquisitionTime"]);
+                        structVisionData[iCamNr - 1].dAngleStart = StrToInt(dr["AngleStart"]);
+                        structVisionData[iCamNr - 1].dAngleExtent = StrToInt(dr["AngleExtent"]);
+                        structVisionData[iCamNr - 1].iGrayPercent = StrToInt(dr["GrayPercent"]);
+                        structVisionData[iCamNr - 1].iGrayOffset = StrToInt(dr["GrayOffset"]);
+                        //structVisionData[iCamNr - 1].sMetric = (string)dr["Metric"];
+                        structVisionData[iCamNr - 1].iMinContourLength = StrToInt(dr["MinContourLength"]);
+                        structVisionData[iCamNr - 1].iMaskWidth = StrToInt(dr["MaskWidth"]);
+                        structVisionData[iCamNr - 1].iMaskHeight = StrToInt(dr["MaskHeight"]);
+                        bDataFound = true;
+                    }
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("Error while reading Access- data : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return bDataFound;
+        }
+
+        public static bool SmartLightParameterExists(string sInspectionPlanName)
+        {
+            bool bExist = false;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sSelectComand = "SELECT * FROM [SmartekLightParameter] WHERE " +
+                                        "InspectionPlanName = '" + sInspectionPlanName + "'";
+
+
+            OleDbConnection conn = null;
+
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectComand, conn);
+            OleDbDataReader dr;
+
+            try
+            {
+                conn.Open();
+                dr =  cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    bExist = true;
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Light parameter do not exist : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return bExist;
+
+        }
+
+        public static int ReadLastMesProgID()
+        {
+            int iLastMesProgID = 0, iMesProgID;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            OleDbConnection conn = null;
+
+            string sSelectMesProg = "SELECT * FROM MesPrograms";
+
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectMesProg, conn);
+            OleDbDataReader dr;
+
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    iMesProgID = StrToInt(dr["ID"]);
+                    if (iMesProgID> iLastMesProgID)
+                    {
+                        iLastMesProgID = iMesProgID;
+                    }
+                }
+
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error while reading of last ID- Number : " + exception.Message);
+               
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+            return iLastMesProgID;
+        }
+
 
 
 
