@@ -48,14 +48,42 @@
   <ItemGroup>
     <Compile Include="ClassDaten.cs" />
     <Compile Include="ClassDBFunctions.cs" />
+    <Compile Include="ClassIniFile.cs" />
     <Compile Include="Form_01_Main.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form_01_Main.Designer.cs">
       <DependentUpon>Form_01_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_02_InspectionPlanLoad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_02_InspectionPlanLoad.Designer.cs">
+      <DependentUpon>Form_02_InspectionPlanLoad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_41_Packaging.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_41_Packaging.Designer.cs">
+      <DependentUpon>Form_41_Packaging.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_42_Counter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_42_Counter.Designer.cs">
+      <DependentUpon>Form_42_Counter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_52_Smartek_LightControler.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_52_Smartek_LightControler.Designer.cs">
+      <DependentUpon>Form_52_Smartek_LightControler.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_02_InspectionPlanLoad.resx">
+      <DependentUpon>Form_02_InspectionPlanLoad.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

@@ -127,7 +127,7 @@ namespace CS_KEHRATEC
 
         }
 
-        public static int CounterUnitExists(string sInspectionPlanName, int iMesToolNr)
+        public static int CounterDataUnitExists(string sInspectionPlanName, int iMesToolNr)
         {
             string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
             string sSelectCounterData = "Select * from [counter] where " + "(InspectionPlanName = '" + sInspectionPlanName + "') AND " +
@@ -265,7 +265,7 @@ namespace CS_KEHRATEC
                 if (Result == 0)
                     Result = 2;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
 
                 MessageBox.Show("Error while reading InspectionPlan - Data : " + exception.Message);
@@ -414,7 +414,7 @@ namespace CS_KEHRATEC
 
 
             }
-            catch (Exception)
+            catch (Exception exception)
             {
                 string sMessage = "Erroe while reading Access- Data : " + exception.Message;
 
@@ -572,6 +572,84 @@ namespace CS_KEHRATEC
 
                 MessageBox.Show("Error while reading Access- data : " + exception.Message);
             }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+        public static void LoadMesPrograms(string sInspectionPlanName)
+        {
+            string sSelectMesProg = "SELECT * FROM MesPrograms WHERE InspectionPlanName LIKE ";
+            int k = 0;
+
+            ClassDaten.structSystemData.iMesProgramsFound = 0;
+            ClassDaten.structSystemData.iActivMesProgramsFound = 0;
+
+            // Voreinstellung aller Kameras
+            for (int i = 0; i < ClassDaten.MAX_CAMERAS; i++)
+            {
+                if (ClassDaten.structCamPara[i].iCameraTyp == (int)ClassDaten.CameraTyp.Matrix)
+                {
+                    ClassDaten.structCamPara[i].bActiv = false;                             // Deaktiv
+                    ClassDaten.structCamPara[i].bDoubleTriggerFlag = false;                 // Doppeltrigger
+                }
+                else
+                {
+                    ClassDaten.structCamPara[i].bActiv = ClassDaten.structCamPara[i].bCameraActivPreset;
+                }
+            }
+
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectMesProg + "'" + sInspectionPlanName + "'", conn);
+            OleDbDataReader dr;
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+
+                for (k = 0; k < ClassDaten.MAX_STRUCT_MESPROGDATA; k++)
+                {
+                    ClassDaten.structMesProgData[k].Init();
+                }
+
+                k = 0;
+                while (dr.Read())
+                {
+                    GetMesProgData(ref ClassDaten.structMesProgData[k], dr);
+
+                    //Automatische Kameratyp - und Aktiv - Einstellung
+                    // Ralf prьfen!!
+                    ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].iCameraTyp = ClassDaten.structMesProgData[k].iCameraTyp;
+                    if (ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].bCameraActivPreset)
+                    {   // Wenn die Supervisor Einistellung fьr die entsprechende Kamera 'aktiv' ist
+                        ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].bActiv = true;
+                    }
+
+                    if (!ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].bActiv)
+                        ClassDaten.structMesProgData[k].bMesProgActiv = false;
+
+                    //Zдhle die aktiven Messprogramme
+                    if (ClassDaten.structMesProgData[k].bMesProgActiv)
+                        ClassDaten.structSystemData.iActivMesProgramsFound++;
+                    //Zдhle alle Messprogramme
+                    ClassDaten.structSystemData.iMesProgramsFound++;
+
+                    // Bei Ьberlдnge Doppeltrigger - Flag aktivieren
+                    if (ClassDaten.structMesProgData[k].bOverLength)
+                        ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].bDoubleTriggerFlag = true;
+
+                    k++;
+                }
+
+                dr.Close();
+            }
+
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error while reading Access- Data : " + exception.Message);
+            }
+
             finally
             {
                 conn.Close();
@@ -803,11 +881,313 @@ namespace CS_KEHRATEC
         }
 
 
+        public static void ReadMesProgCamData(string sInspectionPlanName)
+        {
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            OleDbConnection conn = null;
+
+            string sSelectMesProg = "SELECT * FROM MesPrograms WHERE InspectionPlanName LIKE ";
+
+            for (int i = 0; i < ClassDaten.MAX_CAMERAS; i++)
+            {
+                if (ClassDaten.structCamPara[i].iCameraTyp==(int)ClassDaten.CameraTyp.Matrix)
+                {
+                    ClassDaten.structCamPara[i].bActiv = false;
+                }
+                else
+                {
+                    ClassDaten.structCamPara[i].bActiv = ClassDaten.structCamPara[i].bCameraActivPreset;
+                }
+            }
+
+
+
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectMesProg+ "'"+ sInspectionPlanName+"'", conn);
+            OleDbDataReader dr;
+
+            int k = 0;
+
+            try
+            {
+                conn.Open();
+                dr= cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    ClassDaten.structMesProgData[k].iCameraNr = StrToInt(dr["CameraNr"]);
+                    ClassDaten.structMesProgData[k].iCameraTyp= StrToInt(dr["CameraTyp"]);
+                    ClassDaten.structMesProgData[k].bMesProgActiv = (bool)dr["MesProgActiv"];
+
+
+                    //Automatische Kameratyp - und Aktiv - Einstellung
+                    ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].iCameraTyp = ClassDaten.structMesProgData[k].iCameraTyp;
+                    if (ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].bCameraActivPreset)
+                    {   // Wenn die Supervisor Einistellung fьr die entsprechende Kamera 'aktiv' ist
+                        ClassDaten.structCamPara[ClassDaten.structMesProgData[k].iCameraNr - 1].bActiv = true;
+                    }
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("Error while reading Access- camera data : " + exception.Message);
+
+            }
+            finally
+            {
+                conn.Close();
+            }
 
 
 
 
 
+
+        }
+
+        public static void ReadMesProgCounterData()
+        {
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sSelectCounterData;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+            OleDbDataReader dr;
+
+
+            for (int k = 0; k < ClassDaten.structSystemData.iMesProgramsFound; k++)
+            {
+
+                sSelectCounterData = "SELECT * FROM [Counter] WHERE " + "(InspectionPlanName + '" + ClassDaten.structSystemData.sActualInspectionPlan + "') AND " +
+                                    "(MesProgName = '" + ClassDaten.structMesProgData[k].sMesProgName + "') AND " +
+                                    "(ID = " + ClassDaten.structMesProgData[k].iID + ")" + " AND " +
+                                    "(MesUnitNr = 0 )";
+
+
+
+                OleDbCommand cmd = new OleDbCommand(sSelectCounterData, conn);
+
+                try
+                {
+                    conn.Open();
+                    dr = cmd.ExecuteReader();
+                    while (dr.Read())
+                    {
+                        ClassDaten.structCounter.iTotalParts = StrToInt(dr["TotalParts"]);
+                        ClassDaten.structCounter.iTotalOKParts = StrToInt(dr["TotalOKParts"]);
+                        ClassDaten.structCounter.iTotalNOKParts = StrToInt(dr["TotalNOKParts"]);
+                        ClassDaten.structCounter.iTotalUntested = StrToInt(dr["TotalUntested"]);
+                        ClassDaten.structMesProgData[k].iOKParts = StrToInt(dr["OKParts"]);
+                        ClassDaten.structMesProgData[k].iMinTolNOKParts = StrToInt(dr["MinTolNOKParts"]);
+                        ClassDaten.structMesProgData[k].iMaxTolNOKParts = StrToInt(dr["MaxTolNOKParts"]);
+                    }
+                    dr.Close();
+
+                }
+                catch (Exception exception)
+                {
+
+                    MessageBox.Show("Error while reading Counter - data : " + exception.Message);
+
+                }
+                finally
+                {
+                    conn.Close();
+                }
+
+            }
+        }
+
+
+        public static void ReadMesUnitCounterData()
+        {
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sSelectCounterData;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+            OleDbDataReader dr;
+
+            sSelectCounterData = "SELECT * FROM [Counter] WHERE " +
+                                 "(InspectionPlanName = '" + ClassDaten.structSystemData.sActualInspectionPlan + "') AND " +
+                                 "(MesUnitNr > 0 )";
+
+            OleDbCommand cmd = new OleDbCommand(sSelectCounterData, conn);
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+                int k = 0;
+                while (dr.Read())
+                {
+                    //RS Test
+                    //ClassDaten.structMesUnitData[k].sMesProgName = dr["MesProgName"].ToString();
+                    ClassDaten.structMesUnitData[k].iTotalParts = StrToInt(dr["TotalParts"]);
+                    ClassDaten.structMesUnitData[k].iTotalOKParts = StrToInt(dr["TotalOKParts"]);
+                    ClassDaten.structMesUnitData[k].iTotalNOKParts = StrToInt(dr["TotalNOKParts"]);
+                    ClassDaten.structMesUnitData[k].iTotalUntested = StrToInt(dr["TotalUntested"]);
+                    ClassDaten.structMesUnitData[k].iOKParts = StrToInt(dr["OKParts"]);
+                    ClassDaten.structMesUnitData[k].iMinTolNOKParts = StrToInt(dr["MinTolNOKParts"]);
+                    ClassDaten.structMesUnitData[k].iMaxTolNOKParts = StrToInt(dr["MaxTolNOKParts"]);
+                    k++;
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error while reading Measurementsystem - Counter - data : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
+
+
+        public static bool ReadLightParameter(string sInspectionPlanName, ref LightControlData structLC_Data)
+        {
+
+            bool bResult = false;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sSelectCommand = "SELECT * FROM [LightParameter] WHERE " +
+                                        "InspectionPlanName = '" + sInspectionPlanName + "'";
+
+            OleDbConnection conn = null;
+
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectCommand, conn);
+            OleDbDataReader dr;
+
+
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    structLC_Data.iOut1_Mode = StrToInt(dr["Out1_Mode"]);
+                    structLC_Data.iOut1_Dominance = StrToInt(dr["Out1_Dominance"]);
+                    structLC_Data.iOut1_TriggerEdge = StrToInt(dr["Out1_TriggerEdge"]);
+                    structLC_Data.iOut1_Chan1Current = StrToInt(dr["Out1_Chan1Current"]);
+                    structLC_Data.iOut1_Chan2Current = StrToInt(dr["Out1_Chan2Current"]);
+                    structLC_Data.iOut1_Chan3Current = StrToInt(dr["Out1_Chan3Current"]);
+                    structLC_Data.iOut1_Chan4Current = StrToInt(dr["Out1_Chan4Current"]);
+                    structLC_Data.iOut1_Chan5Current = StrToInt(dr["Out1_Chan5Current"]);
+                    structLC_Data.iOut1_Chan6Current = StrToInt(dr["Out1_Chan6Current"]);
+                    structLC_Data.iOut1_OnTime = StrToInt(dr["Out1_OnTime"]);
+                    structLC_Data.iOut1_TrigDelayTime = StrToInt(dr["Out1_TrigDelayTime"]);
+                    structLC_Data.iOut1_HoldTime = StrToInt(dr["Out1_HoldTime"]);
+                    structLC_Data.iOut1_TrigRepeat = StrToInt(dr["Out1_TrigRepeat"]);
+                    structLC_Data.iOut1_TrigRepeatOffTime = StrToInt(dr["Out1_TrigRepeatOffTime"]);
+                    structLC_Data.iOut2_Mode = StrToInt(dr["Out2_Mode"]);
+                    structLC_Data.iOut2_Dominance = StrToInt(dr["Out2_Dominance"]);
+                    structLC_Data.iOut2_TriggerEdge = StrToInt(dr["Out2_TriggerEdge"]);
+                    structLC_Data.iOut2_Chan1Current = StrToInt(dr["Out2_Chan1Current"]);
+                    structLC_Data.iOut2_Chan2Current = StrToInt(dr["Out2_Chan2Current"]);
+                    structLC_Data.iOut2_Chan3Current = StrToInt(dr["Out2_Chan3Current"]);
+                    structLC_Data.iOut2_Chan4Current = StrToInt(dr["Out2_Chan4Current"]);
+                    structLC_Data.iOut2_Chan5Current = StrToInt(dr["Out2_Chan5Current"]);
+                    structLC_Data.iOut2_Chan6Current = StrToInt(dr["Out2_Chan6Current"]);
+                    structLC_Data.iOut2_OnTime = StrToInt(dr["Out2_OnTime"]);
+                    structLC_Data.iOut2_TrigDelayTime = StrToInt(dr["Out2_TrigDelayTime"]);
+                    structLC_Data.iOut2_HoldTime = StrToInt(dr["Out2_HoldTime"]);
+                    structLC_Data.iOut2_TrigRepeat = StrToInt(dr["Out2_TrigRepeat"]);
+                    structLC_Data.iOut2_TrigRepeatOffTime = StrToInt(dr["Out2_TrigRepeatOffTime"]);
+                    bResult = true;
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error while reading Lightparameter : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return bResult;
+
+
+
+
+        }
+
+
+        public static bool ReadLightParameter(string sInspectionPlanName,
+            ref Form_52_Smartek_LightControler.SmartekLightControlerData structLC_Data)
+        {
+            bool bResult = false;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sSelectCommand = "SELECT * FROM [SmartekLightParameter] WHERE " +
+                                        "InspectionPlanName = '" + sInspectionPlanName + "'";
+
+
+            OleDbConnection conn = null;
+
+            conn = new OleDbConnection(sConnection);
+            OleDbCommand cmd = new OleDbCommand(sSelectCommand, conn);
+            OleDbDataReader dr;
+
+
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+                while (dr.Read())
+                {
+                    structLC_Data.sIP_Adress = dr["IP_Adress"].ToString();
+                    structLC_Data.iMode = StrToInt(dr["Mode"]);
+                    structLC_Data.iTriggerEdge = StrToInt(dr["TriggerEdge"]);
+                    structLC_Data.dOutputVoltage = StrToDouble(dr["OutputVoltage"]);
+                    structLC_Data.bOutputVoltAutoSense = (bool)dr["OutputVoltageAutoSense"];
+                    structLC_Data.structChParameter[0].dOutputCurrent = StrToDouble(dr["Ch1_Current"]);
+                    structLC_Data.structChParameter[1].dOutputCurrent = StrToDouble(dr["Ch2_Current"]);
+                    structLC_Data.structChParameter[2].dOutputCurrent = StrToDouble(dr["Ch3_Current"]);
+                    structLC_Data.structChParameter[3].dOutputCurrent = StrToDouble(dr["Ch4_Current"]);
+                    structLC_Data.structChParameter[0].dTriggerDelayTime = StrToDouble(dr["Ch1_TriggerDelayTime"]);
+                    structLC_Data.structChParameter[1].dTriggerDelayTime = StrToDouble(dr["Ch2_TriggerDelayTime"]);
+                    structLC_Data.structChParameter[2].dTriggerDelayTime = StrToDouble(dr["Ch3_TriggerDelayTime"]);
+                    structLC_Data.structChParameter[3].dTriggerDelayTime = StrToDouble(dr["Ch4_TriggerDelayTime"]);
+                    structLC_Data.structChParameter[0].dTriggerOnTime = StrToDouble(dr["Ch1_TriggerOnTime"]);
+                    structLC_Data.structChParameter[1].dTriggerOnTime = StrToDouble(dr["Ch2_TriggerOnTime"]);
+                    structLC_Data.structChParameter[2].dTriggerOnTime = StrToDouble(dr["Ch3_TriggerOnTime"]);
+                    structLC_Data.structChParameter[3].dTriggerOnTime = StrToDouble(dr["Ch4_TriggerOnTime"]);
+                    structLC_Data.structChParameter[0].dTriggerOffTime = StrToDouble(dr["Ch1_TriggerOffTime"]);
+                    structLC_Data.structChParameter[1].dTriggerOffTime = StrToDouble(dr["Ch2_TriggerOffTime"]);
+                    structLC_Data.structChParameter[2].dTriggerOffTime = StrToDouble(dr["Ch3_TriggerOffTime"]);
+                    structLC_Data.structChParameter[3].dTriggerOffTime = StrToDouble(dr["Ch4_TriggerOffTime"]);
+                    structLC_Data.structChParameter[0].iTriggerIndex = StrToInt(dr["Ch1_TriggerIndex"]);
+                    structLC_Data.structChParameter[1].iTriggerIndex = StrToInt(dr["Ch2_TriggerIndex"]);
+                    structLC_Data.structChParameter[2].iTriggerIndex = StrToInt(dr["Ch3_TriggerIndex"]);
+                    structLC_Data.structChParameter[3].iTriggerIndex = StrToInt(dr["Ch4_TriggerIndex"]);
+                    structLC_Data.structChParameter[0].bTriggerEnabled = (bool)dr["Ch1_TriggerEnable"];
+                    structLC_Data.structChParameter[1].bTriggerEnabled = (bool)dr["Ch2_TriggerEnable"];
+                    structLC_Data.structChParameter[2].bTriggerEnabled = (bool)dr["Ch3_TriggerEnable"];
+                    structLC_Data.structChParameter[3].bTriggerEnabled = (bool)dr["Ch4_TriggerEnable"];
+                    structLC_Data.bCam1_Light1_Enable = (bool)dr["Cam1_Light1_Enable"];
+                    structLC_Data.bCam1_Light2_Enable = (bool)dr["Cam1_Light2_Enable"];
+                    structLC_Data.bCam1_Light3_Enable = (bool)dr["Cam1_Light3_Enable"];
+                    structLC_Data.bCam1_Light4_Enable = (bool)dr["Cam1_Light4_Enable"];
+                    structLC_Data.bCam2_Light1_Enable = (bool)dr["Cam2_Light1_Enable"];
+                    structLC_Data.bCam2_Light2_Enable = (bool)dr["Cam2_Light2_Enable"];
+                    structLC_Data.bCam2_Light3_Enable = (bool)dr["Cam2_Light3_Enable"];
+                    structLC_Data.bCam2_Light4_Enable = (bool)dr["Cam2_Light4_Enable"];
+                    bResult = true;
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error while reading Lightparameter : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return bResult;
+
+        }
 
 
         public static int StrToInt(object Object)
@@ -827,9 +1207,653 @@ namespace CS_KEHRATEC
         }
 
 
+        public static bool TableDataExists(string sTableName, string sInspectionPlanName)
+        {
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sCommand = "SELECT * FROM " + sTableName + " WHERE (InspectionPlanName =";
+
+            OleDbConnection conn = null;
+
+            conn = new OleDbConnection(sConnection);
+
+            OleDbCommand cmd = new OleDbCommand(sCommand + "'" + sInspectionPlanName + "')", conn);
+
+
+            OleDbDataReader dr;
+            bool Exist = false;
+
+            try
+            {
+                conn.Open();
+                dr = cmd.ExecuteReader();
+
+                while (dr.Read())
+                {
+                    Exist = true;
+                }
+                dr.Close();
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("Error while proof Datentable " + sTableName + " , " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            
+            }
+
+            return Exist;
+        }
+
+
+        public static void UpdateCounter(string sInspectionPlanName, string sMesProgName, int iID)
+        {
+            int Result;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate;
+
+
+            OleDbConnection conn = null;
+
+            conn = new OleDbConnection(sConnection);
+
+            Result = ClassDBFunctions.CounterDataExists(sInspectionPlanName, iID);
+
+            if (Result==1)
+            {
+                sUpdate = "UPDATE [Counter] SET" +
+                        " MesProgName= '" + sMesProgName + "'" +
+                        "WHERE (InspectionPlanName= '" + sInspectionPlanName + "')" + " AND " +
+                        "(ID = )" + iID + ")";
+
+                OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                }
+                catch (Exception exception)
+                {
+
+                    MessageBox.Show("Error while Update Counter- Measurementprogramname : " + exception.Message);
+
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+
+        }
+
+
+        public static void WriteMesProgCounter()
+        {
+            int k = 0, Result;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate, sInsert;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+
+            Form_41_Packaging formPacking = new Form_41_Packaging();
+            formCounter.WriteIniData(sIniFileName);
+            formCounter.Dispose();
+
+
+            Form_42_Counter formCounter= new Form_42_Counter();
+            formCounter.WriteIniData(sIniFileName);
+            formCounter.Dispose();
+
+            for  (k = 0; k < ClassDaten.structSystemData.iMesProgramsFound; k++)
+            {
+                Result = ClassDBFunctions.CounterDataExists(ClassDaten.structSystemData.sActualInspectionPlan,
+                       ClassDaten.structMesProgData[k].iID);
+
+                if (Result==1)
+                {
+                    sUpdate = "UPDATE [Counter] SET" +
+                              " TotalParts = " + ClassDaten.structCounter.iTotalParts + "," +
+                              " TotalOKParts = " + ClassDaten.structCounter.iTotalOKParts + "," +
+                              " TotalNOKParts = " + ClassDaten.structCounter.iTotalNOKParts + "," +
+                              " TotalUntested = " + ClassDaten.structCounter.iTotalUntested + "," +
+                              " OKParts = " + ClassDaten.structMesProgData[k].iOKParts + "," +
+                              " MinTolNOKParts = " + ClassDaten.structMesProgData[k].iMinTolNOKParts + "," +
+                              " MaxTolNOKParts = " + ClassDaten.structMesProgData[k].iMaxTolNOKParts +
+                              " WHERE (InspectionPlanName = '" + ClassDaten.structSystemData.sActualInspectionPlan + "')" + " AND " +
+                              "(ID = " + ClassDaten.structMesProgData[k].iID + ")" + " AND " +
+                              "(MesUnitNr = " + ClassDaten.structMesProgData[k].iMesUnitNr + ")";
 
 
 
+                    OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show("Error while Update Counter - data : " + exception.Message);
+                        break;
+                        
+                    }
+                    finally
+                    {
+                        conn.Close();
+
+                    }
+                }
+
+                if (Result==2)
+                {
+                    sInsert = "INSERT INTO [Counter] "+
+                              "(InspectionPlanName, MesProgName, ID, MesUnitNr, TotalParts, TotalOKParts, TotalNOKParts, TotalUntested, OKParts, MinTolNOKParts, MaxTolNOKParts ) VALUES " +
+                              "('" + ClassDaten.structSystemData.sActualInspectionPlan + "'," +
+                              "'" + ClassDaten.structMesProgData[k].sMesProgName + "'," +
+                              ClassDaten.structMesProgData[k].iID + "," +
+                              ClassDaten.structMesProgData[k].iMesUnitNr + "," +
+                              ClassDaten.structCounter.iTotalParts + "," +
+                              ClassDaten.structCounter.iTotalOKParts + "," +
+                              ClassDaten.structCounter.iTotalNOKParts + "," +
+                              ClassDaten.structCounter.iTotalUntested + "," +
+                              ClassDaten.structMesProgData[k].iOKParts + "," +
+                              ClassDaten.structMesProgData[k].iMinTolNOKParts + "," +
+                              ClassDaten.structMesProgData[k].iMaxTolNOKParts + ")";
+
+                    OleDbCommand cmd = new OleDbCommand(sInsert, conn);
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show("Error while Insert to Counter - data : " + exception.Message);
+                        break;
+
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+
+                }
+            }
+
+        }
+
+        public static void WriteMesUnitCounter()
+        {
+            int k = 0, Result;
+            int iNull = 0;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate, sInsert;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+
+            // Vorbelegung
+            ClassDaten.structMesUnitData[0].sMesProgName = "Hцhenmessung";
+            ClassDaten.structMesUnitData[0].iMesUnitNr = 1;
+            ClassDaten.structMesUnitData[1].sMesProgName = "Tiefenmessung";
+            ClassDaten.structMesUnitData[1].iMesUnitNr = 2;
+            ClassDaten.structMesUnitData[2].sMesProgName = "Lochprьfung";
+            ClassDaten.structMesUnitData[2].iMesUnitNr = 3;
+            ClassDaten.structMesUnitData[3].sMesProgName = "Gewindeprьfung";
+            ClassDaten.structMesUnitData[3].iMesUnitNr = 4;
+            ClassDaten.structMesUnitData[4].sMesProgName = "Reserve Sensor Prьfung";
+            ClassDaten.structMesUnitData[4].iMesUnitNr = 5;
+
+            //TotalCounter und Errors aus Messprogrammen updaten
+            for (k = 0; k < ClassDaten.MAX_MES_UNITS; k++)
+            {
+                Result = ClassDBFunctions.CounterDataUnitExists(ClassDaten.structSystemData.sActualInspectionPlan,
+                    ClassDaten.structMesUnitData[k].iMesUnitNr);
+
+                if (Result == 1)
+                {
+                    sUpdate = "UPDATE [Counter] SET" +
+                              " TotalParts = " + ClassDaten.structCounter.iTotalParts + "," +
+                              " TotalOKParts = " + ClassDaten.structCounter.iTotalOKParts + "," +
+                              " TotalNOKParts = " + ClassDaten.structCounter.iTotalNOKParts + "," +
+                              " TotalUntested = " + ClassDaten.structCounter.iSeriesErrorCount + "," +
+                              " OKParts = " + ClassDaten.structMesUnitData[k].iOKParts + "," +
+                              " MinTolNOKParts = " + ClassDaten.structMesUnitData[k].iMinTolNOKParts + "," +
+                              " MaxTolNOKParts = " + ClassDaten.structMesUnitData[k].iMaxTolNOKParts +
+                              " WHERE (InspectionPlanName = '" + ClassDaten.structSystemData.sActualInspectionPlan + "')" + " AND " +
+                              "(ID = 0)" + " AND " +
+                              "(MesUnitNr = " + ClassDaten.structMesUnitData[k].iMesUnitNr + ")";
+
+                    OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+                    try
+                    {
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                        conn.Close();
+                    }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show("Error while Update Counter - data : " + exception.Message);
+                        break;
+                    }
+                    finally
+                    {
+                        conn.Close();
+                    }
+                }
+                else
+                {
+                    if (Result == 2)
+                    {
+                        sInsert = "INSERT INTO [Counter] " +
+                            "(InspectionPlanName, MesProgName, ID, MesUnitNr, TotalParts, TotalOKParts, TotalNOKParts, TotalUntested, OKParts, MinTolNOKParts, MaxTolNOKParts ) VALUES " +
+                            "('" + ClassDaten.structSystemData.sActualInspectionPlan + "'," +
+                            "'" + ClassDaten.structMesUnitData[k].sMesProgName + "'," +
+                            iNull + "," +
+                            ClassDaten.structMesUnitData[k].iMesUnitNr + "," +
+                            ClassDaten.structCounter.iTotalParts + "," +
+                            ClassDaten.structCounter.iTotalOKParts + "," +
+                            ClassDaten.structCounter.iTotalNOKParts + "," +
+                            ClassDaten.structCounter.iTotalUntested + "," +
+                            ClassDaten.structMesUnitData[k].iOKParts + "," +
+                            ClassDaten.structMesUnitData[k].iMinTolNOKParts + "," +
+                            ClassDaten.structMesUnitData[k].iMaxTolNOKParts + ")";
+
+                        OleDbCommand cmd = new OleDbCommand(sInsert, conn);
+                        try
+                        {
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                        }
+                        catch (Exception exception)
+                        {
+                            MessageBox.Show("Error while Insert to Counter - data : " + exception.Message);
+                            break;
+                        }
+                        finally
+                        {
+                            conn.Close();
+                        }
+                    }
+                }
+            }
+        }
+
+        public static bool WriteLightParameter(int iOutput, string sInspectionPlanName, LightControlData structLC_Data)
+        {
+            bool bResult = false;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate, sInsert;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+
+            if (LightParameterExists(sInspectionPlanName))
+            {
+                if (iOutput == 1)
+                {
+                    sUpdate = "UPDATE [LightParameter] SET" +
+                        " Out1_Mode = " + structLC_Data.iOut1_Mode + "," +
+                        " Out1_Dominance = " + structLC_Data.iOut1_Dominance + "," +
+                        " Out1_TriggerEdge = " + structLC_Data.iOut1_TriggerEdge + "," +
+                        " Out1_Chan1Current = " + structLC_Data.iOut1_Chan1Current + "," +
+                        " Out1_Chan2Current = " + structLC_Data.iOut1_Chan2Current + "," +
+                        " Out1_Chan3Current = " + structLC_Data.iOut1_Chan3Current + "," +
+                        " Out1_Chan4Current = " + structLC_Data.iOut1_Chan4Current + "," +
+                        " Out1_Chan5Current = " + structLC_Data.iOut1_Chan5Current + "," +
+                        " Out1_Chan6Current = " + structLC_Data.iOut1_Chan6Current + "," +
+                        " Out1_OnTime = " + structLC_Data.iOut1_OnTime + "," +
+                        " Out1_TrigDelayTime = " + structLC_Data.iOut1_TrigDelayTime + "," +
+                        " Out1_HoldTime = " + structLC_Data.iOut1_HoldTime + "," +
+                        " Out1_TrigRepeat = " + structLC_Data.iOut1_TrigRepeat + "," +
+                        " Out1_TrigRepeatOffTime = " + structLC_Data.iOut1_TrigRepeatOffTime +
+                        " WHERE (InspectionPlanName = '" + sInspectionPlanName + "')";
+                }
+                else
+                {
+                    sUpdate = "UPDATE [LightParameter] SET" +
+                       " Out2_Mode = " + structLC_Data.iOut2_Mode + "," +
+                       " Out2_Dominance = " + structLC_Data.iOut2_Dominance + "," +
+                       " Out2_TriggerEdge = " + structLC_Data.iOut2_TriggerEdge + "," +
+                       " Out2_Chan1Current = " + structLC_Data.iOut2_Chan1Current + "," +
+                       " Out2_Chan2Current = " + structLC_Data.iOut2_Chan2Current + "," +
+                       " Out2_Chan3Current = " + structLC_Data.iOut2_Chan3Current + "," +
+                       " Out2_Chan4Current = " + structLC_Data.iOut2_Chan4Current + "," +
+                       " Out2_Chan5Current = " + structLC_Data.iOut2_Chan5Current + "," +
+                       " Out2_Chan6Current = " + structLC_Data.iOut2_Chan6Current + "," +
+                       " Out2_OnTime = " + structLC_Data.iOut2_OnTime + "," +
+                       " Out2_TrigDelayTime = " + structLC_Data.iOut2_TrigDelayTime + "," +
+                       " Out2_HoldTime = " + structLC_Data.iOut2_HoldTime + "," +
+                       " Out2_TrigRepeat = " + structLC_Data.iOut2_TrigRepeat + "," +
+                       " Out2_TrigRepeatOffTime = " + structLC_Data.iOut2_TrigRepeatOffTime +
+                       " WHERE (InspectionPlanName = '" + sInspectionPlanName + "')";
+                }
+
+                OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    bResult = true;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error while Update Lightparameter : " + exception.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                if (iOutput == 1)
+                {
+                    sInsert = "INSERT INTO [LightParameter] " +
+                        "( InspectionPlanName," +
+                        " Out1_Mode, Out1_Dominance, Out1_TriggerEdge, " +
+                        " Out1_Chan1Current, Out1_Chan2Current, Out1_Chan3Current, Out1_Chan4Current, Out1_Chan5Current, Out1_Chan6Current," +
+                        " Out1_OnTime, Out1_TrigDelayTime, Out1_HoldTime, Out1_TrigRepeat, Out1_TrigRepeatOffTime" +
+                        ") VALUES " +
+
+                        "('" + sInspectionPlanName + "'," +
+
+                        structLC_Data.iOut1_Mode + "," +
+                        structLC_Data.iOut1_Dominance + "," +
+                        structLC_Data.iOut1_TriggerEdge + "," +
+                        structLC_Data.iOut1_Chan1Current + "," +
+                        structLC_Data.iOut1_Chan2Current + "," +
+                        structLC_Data.iOut1_Chan3Current + "," +
+                        structLC_Data.iOut1_Chan4Current + "," +
+                        structLC_Data.iOut1_Chan5Current + "," +
+                        structLC_Data.iOut1_Chan6Current + "," +
+                        structLC_Data.iOut1_OnTime + "," +
+                        structLC_Data.iOut1_TrigDelayTime + "," +
+                        structLC_Data.iOut1_HoldTime + "," +
+                        structLC_Data.iOut1_TrigRepeat + "," +
+                        structLC_Data.iOut1_TrigRepeatOffTime + ")";
+
+                }
+                else
+                {
+                    sInsert = "INSERT INTO [LightParameter] " +
+                        "( InspectionPlanName," +
+                        " Out2_Mode, Out2_Dominance, Out2_TriggerEdge, " +
+                        " Out2_Chan1Current, Out2_Chan2Current, Out2_Chan3Current, Out2_Chan4Current, Out2_Chan5Current, Out2_Chan6Current," +
+                        " Out2_OnTime, Out2_TrigDelayTime, Out2_HoldTime, Out2_TrigRepeat, Out2_TrigRepeatOffTime" +
+                        ") VALUES " +
+
+                        "('" + sInspectionPlanName + "'," +
+                        structLC_Data.iOut2_Mode + "," +
+                        structLC_Data.iOut2_Dominance + "," +
+                        structLC_Data.iOut2_TriggerEdge + "," +
+                        structLC_Data.iOut2_Chan1Current + "," +
+                        structLC_Data.iOut2_Chan2Current + "," +
+                        structLC_Data.iOut2_Chan3Current + "," +
+                        structLC_Data.iOut2_Chan4Current + "," +
+                        structLC_Data.iOut2_Chan5Current + "," +
+                        structLC_Data.iOut2_Chan6Current + "," +
+                        structLC_Data.iOut2_OnTime + "," +
+                        structLC_Data.iOut2_TrigDelayTime + "," +
+                        structLC_Data.iOut2_HoldTime + "," +
+                        structLC_Data.iOut2_TrigRepeat + "," +
+                        structLC_Data.iOut2_TrigRepeatOffTime + ")";
+                }
+
+                OleDbCommand cmd = new OleDbCommand(sInsert, conn);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    bResult = true;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error while Insert to Lightparameter : " + exception.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return bResult;
+        }
+
+        public static bool WriteSmartekLightParameter(string sInspectionPlanName,
+                         Form_52_Smartek_LightControler.SmartekLightControlerData structLC_Data)
+        {
+            bool bResult = false;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate, sInsert;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+
+            if (SmartekLightParameterExists(sInspectionPlanName))
+            {
+                sUpdate = "UPDATE [SmartekLightParameter] SET" +
+                    " IP_Adress = '" + structLC_Data.sIP_Adress + "'," +
+                    " Mode = " + structLC_Data.iMode + "," +
+                    " TriggerEdge = " + structLC_Data.iTriggerEdge + "," +
+                    " OutputVoltage = " + Convert.ToInt32(structLC_Data.dOutputVoltage) + "," +
+                    " OutputVoltageAutoSense = " + structLC_Data.bOutputVoltAutoSense + "," +
+                    " Ch1_Current = " + structLC_Data.structChParameter[0].dOutputCurrent + "," +
+                    " Ch2_Current = " + structLC_Data.structChParameter[1].dOutputCurrent + "," +
+                    " Ch3_Current = " + structLC_Data.structChParameter[2].dOutputCurrent + "," +
+                    " Ch4_Current = " + structLC_Data.structChParameter[3].dOutputCurrent + "," +
+                    " Ch1_TriggerDelayTime = " + structLC_Data.structChParameter[0].dTriggerDelayTime + "," +
+                    " Ch2_TriggerDelayTime = " + structLC_Data.structChParameter[1].dTriggerDelayTime + "," +
+                    " Ch3_TriggerDelayTime = " + structLC_Data.structChParameter[2].dTriggerDelayTime + "," +
+                    " Ch4_TriggerDelayTime = " + structLC_Data.structChParameter[3].dTriggerDelayTime + "," +
+                    " Ch1_TriggerOnTime = " + structLC_Data.structChParameter[0].dTriggerOnTime + "," +
+                    " Ch2_TriggerOnTime = " + structLC_Data.structChParameter[1].dTriggerOnTime + "," +
+                    " Ch3_TriggerOnTime = " + structLC_Data.structChParameter[2].dTriggerOnTime + "," +
+                    " Ch4_TriggerOnTime = " + structLC_Data.structChParameter[3].dTriggerOnTime + "," +
+                    " Ch1_TriggerOffTime = " + structLC_Data.structChParameter[0].dTriggerOffTime + "," +
+                    " Ch2_TriggerOffTime = " + structLC_Data.structChParameter[1].dTriggerOffTime + "," +
+                    " Ch3_TriggerOffTime = " + structLC_Data.structChParameter[2].dTriggerOffTime + "," +
+                    " Ch4_TriggerOffTime = " + structLC_Data.structChParameter[3].dTriggerOffTime + "," +
+                    " Ch1_TriggerIndex = " + structLC_Data.structChParameter[0].iTriggerIndex + "," +
+                    " Ch2_TriggerIndex = " + structLC_Data.structChParameter[1].iTriggerIndex + "," +
+                    " Ch3_TriggerIndex = " + structLC_Data.structChParameter[2].iTriggerIndex + "," +
+                    " Ch4_TriggerIndex = " + structLC_Data.structChParameter[3].iTriggerIndex + "," +
+                    " Ch1_TriggerEnable = " + structLC_Data.structChParameter[0].bTriggerEnabled + "," +
+                    " Ch2_TriggerEnable = " + structLC_Data.structChParameter[1].bTriggerEnabled + "," +
+                    " Ch3_TriggerEnable = " + structLC_Data.structChParameter[2].bTriggerEnabled + "," +
+                    " Ch4_TriggerEnable = " + structLC_Data.structChParameter[3].bTriggerEnabled + "," +
+                    " Cam1_Light1_Enable = " + structLC_Data.bCam1_Light1_Enable + "," +
+                    " Cam1_Light2_Enable = " + structLC_Data.bCam1_Light2_Enable + "," +
+                    " Cam1_Light3_Enable = " + structLC_Data.bCam1_Light3_Enable + "," +
+                    " Cam1_Light4_Enable = " + structLC_Data.bCam1_Light4_Enable + "," +
+                    " Cam2_Light1_Enable = " + structLC_Data.bCam2_Light1_Enable + "," +
+                    " Cam2_Light2_Enable = " + structLC_Data.bCam2_Light2_Enable + "," +
+                    " Cam2_Light3_Enable = " + structLC_Data.bCam2_Light3_Enable + "," +
+                    " Cam2_Light4_Enable = " + structLC_Data.bCam2_Light4_Enable +
+                    " WHERE (InspectionPlanName = '" + sInspectionPlanName + "')";
+
+                OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    bResult = true;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error while Update Lightparameter : " + exception.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                sInsert = "INSERT INTO [SmartekLightParameter] " +
+                    "( InspectionPlanName," +
+
+                    " IP_Adress, Mode, TriggerEdge, OutputVoltage, OutputVoltageAutoSense," +
+                    " Ch1_Current, Ch2_Current, Ch3_Current, Ch4_Current," +
+                    " Ch1_TriggerDelayTime, Ch2_TriggerDelayTime, Ch3_TriggerDelayTime, Ch4_TriggerDelayTime," +
+                    " Ch1_TriggerOnTime, Ch2_TriggerOnTime, Ch3_TriggerOnTime,  Ch4_TriggerOnTime," +
+                    " Ch1_TriggerOffTime, Ch2_TriggerOffTime, Ch3_TriggerOffTime, Ch4_TriggerOffTime," +
+                    " Ch1_TriggerIndex, Ch2_TriggerIndex, Ch3_TriggerIndex, Ch4_TriggerIndex," +
+                    " Ch1_TriggerEnable, Ch2_TriggerEnable, Ch3_TriggerEnable, Ch4_TriggerEnable," +
+                    " Cam1_Light1_Enable, Cam1_Light2_Enable, Cam1_Light3_Enable, Cam1_Light4_Enable," +
+                    " Cam2_Light1_Enable, Cam2_Light2_Enable, Cam2_Light3_Enable, Cam2_Light4_Enable" +
+                    ") VALUES " +
+
+                    "('" + sInspectionPlanName + "'," +
+                    "'" + structLC_Data.sIP_Adress + "'," +
+                    structLC_Data.iMode + "," +
+                    structLC_Data.iTriggerEdge + "," +
+                    Convert.ToInt32(structLC_Data.dOutputVoltage) + "," +
+                    structLC_Data.bOutputVoltAutoSense + "," +
+                    structLC_Data.structChParameter[0].dOutputCurrent + "," +
+                    structLC_Data.structChParameter[1].dOutputCurrent + "," +
+                    structLC_Data.structChParameter[2].dOutputCurrent + "," +
+                    structLC_Data.structChParameter[3].dOutputCurrent + "," +
+                    structLC_Data.structChParameter[0].dTriggerDelayTime + "," +
+                    structLC_Data.structChParameter[1].dTriggerDelayTime + "," +
+                    structLC_Data.structChParameter[2].dTriggerDelayTime + "," +
+                    structLC_Data.structChParameter[3].dTriggerDelayTime + "," +
+                    structLC_Data.structChParameter[0].dTriggerOnTime + "," +
+                    structLC_Data.structChParameter[1].dTriggerOnTime + "," +
+                    structLC_Data.structChParameter[2].dTriggerOnTime + "," +
+                    structLC_Data.structChParameter[3].dTriggerOnTime + "," +
+                    structLC_Data.structChParameter[0].dTriggerOffTime + "," +
+                    structLC_Data.structChParameter[1].dTriggerOffTime + "," +
+                    structLC_Data.structChParameter[2].dTriggerOffTime + "," +
+                    structLC_Data.structChParameter[3].dTriggerOffTime + "," +
+                    structLC_Data.structChParameter[0].iTriggerIndex + "," +
+                    structLC_Data.structChParameter[1].iTriggerIndex + "," +
+                    structLC_Data.structChParameter[2].iTriggerIndex + "," +
+                    structLC_Data.structChParameter[3].iTriggerIndex + "," +
+                    structLC_Data.structChParameter[0].bTriggerEnabled + "," +
+                    structLC_Data.structChParameter[1].bTriggerEnabled + "," +
+                    structLC_Data.structChParameter[2].bTriggerEnabled + "," +
+                    structLC_Data.structChParameter[3].bTriggerEnabled + "," +
+                    structLC_Data.bCam1_Light1_Enable + "," +
+                    structLC_Data.bCam1_Light2_Enable + "," +
+                    structLC_Data.bCam1_Light3_Enable + "," +
+                    structLC_Data.bCam1_Light4_Enable + "," +
+                    structLC_Data.bCam1_Light1_Enable + "," +
+                    structLC_Data.bCam1_Light2_Enable + "," +
+                    structLC_Data.bCam1_Light3_Enable + "," +
+                    structLC_Data.bCam1_Light4_Enable + ")";
+
+                OleDbCommand cmd = new OleDbCommand(sInsert, conn);
+                try
+                {
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    bResult = true;
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show("Error while Insert to Lightparameter : " + exception.Message);
+                }
+                finally
+                {
+                    conn.Close();
+                }
+            }
+            return bResult;
+        }
+
+
+        public static void WriteToleranceValues()
+        {
+            int k = 0;
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate;
+
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+
+            try
+            {
+                conn.Open();
+                for (k = 0; k < ClassDaten.structSystemData.iMesProgramsFound; k++)
+                {
+                       sUpdate = "UPDATE [MesPrograms] SET" +
+                      " MaxTol = '" + ClassDaten.structMesProgData[k].dMaxTol + "'," +
+                      " NominalValue = '" + ClassDaten.structMesProgData[k].dNominalValue + "'," +
+                      " MinTol = '" + ClassDaten.structMesProgData[k].dMinTol + "'" +
+                      " WHERE (InspectionPlanName = '" + ClassDaten.structSystemData.sActualInspectionPlan + "')" + " AND " +
+                      "(MesProgName = '" + ClassDaten.structMesProgData[k].sMesProgName + "')";
+
+                    OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+
+                    cmd.ExecuteNonQuery();
+
+                }
+
+                conn.Close();
+
+
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("Error while Update Tolerance - data : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+
+            }
+
+        }
+
+        public static void WriteUserParameter(string sInspectionPlan)
+        {
+            string sConnection = "Provider=Microsoft.Jet.OLEDB.4.0; Data Source=" + sDB_FileName;
+            string sUpdate;
+
+            OleDbConnection conn = null;
+            conn = new OleDbConnection(sConnection);
+
+            sUpdate = "UPDATE [InspectionPlan] SET" +
+                " VMaxSpiralOutput = " + ClassDaten.structInspectionPlanData.dVMaxSpiralOutput + "," +
+                " VMaxRoleSelector = " + ClassDaten.structInspectionPlanData.dVMaxRoleSelector + "," +
+                " VMaxLinearOutput1 = " + ClassDaten.structInspectionPlanData.dVMaxLinearOutput1 + "," +
+                " VMaxLinearOutput2 = " + ClassDaten.structInspectionPlanData.dVMaxLinearOutput2 + "," +
+                " PortionQuantityActiv = " + ClassDaten.structInspectionPlanData.bPortionQuantityActiv + "," +
+                " QuantityStop = " + ClassDaten.structInspectionPlanData.iQuantityStop + "," +
+                " VMaxDiskRotation = " + ClassDaten.structInspectionPlanData.iVMaxDiskRotation +
+                " WHERE (InspectionPlanName = '" + sInspectionPlan + "')";
+
+            OleDbCommand cmd = new OleDbCommand(sUpdate, conn);
+            try
+            {
+                conn.Open();
+                cmd.ExecuteNonQuery();
+                conn.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("Error while Update Userdata : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+        }
 
 
 

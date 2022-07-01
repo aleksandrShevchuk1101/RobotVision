@@ -93,7 +93,7 @@ namespace CS_KEHRATEC
     {
         public object hv_FGHandle;      // Handle fьr Kamera
         public bool bActiv;
-        public bool bCamerActivPresent;
+        public bool bCameraActivPreset;
         public bool bDoubleTriggerFlag;
         public bool bExternalTrigger;
         public int iCameraTyp;  // Зональная камера, линейная камера
