@@ -18,7 +18,7 @@ namespace CS_KEHRATEC
         OleDbConnection conn = null;
 
         OleDbDataAdapter daInspectionPlan = null;
-        DataSet dr = null;
+        DataSet ds = null;
 
         const string INI_FILENAME = "Application.ini";
         const string INI_SECTION = "LoadInspectionPlan";
@@ -61,20 +61,9 @@ namespace CS_KEHRATEC
                 ClassIniFile.WriteLogBook(ClassDaten.LOGBOOK_FILENAME, ClassDaten.structSystemData.sUserLevel,
                                           ClassDaten.structPassword.sActUserName, "Inspectionplan '" + cb_InspectionPlanName.Text + "' loaded");
 
-
                 //ClassHalconApplication.InitCameras();
 
-
-
-
             }
-
-
-
-
-
-
-
         }
 
         public void LoadAllInspectionPlanData(string sInspectionPlanName)
@@ -93,8 +82,8 @@ namespace CS_KEHRATEC
             switch (ClassDaten.structOptionData.iUnitType)
             {
                 case (int)ClassDaten.UnitTyp.SlitDisk1:
-                    if (!ClassDaten.structSystemData.bTestFlag)
-                       Load
+                    //if (!ClassDaten.structSystemData.bTestFlag)
+                    //   Load
 
                     break;
                 case (int)ClassDaten.UnitTyp.GlasDisk1:
@@ -104,24 +93,75 @@ namespace CS_KEHRATEC
             }
             WriteIniData(ClassDaten.sDATA_PATH + INI_FILENAME);
 
+        }
+
+        private void Load_Smartek_LightParameter(string sInspectionPlanName)
+        {
+
+
 
 
 
         }
-
 
         private void SetCommentText(DataSet ds)
         {
             DataTable dt = ds.Tables["InspectionPlan"];
             foreach (DataRow cRow in dt.Rows)
             {
-                if (cRow["InspectionPlanName"].ToString()==cb_InspectionPlanName.Text)
+                if (cRow["InspectionPlanName"].ToString() == cb_InspectionPlanName.Text)
                 {
                     lbl_Comment.Text = cRow["Comment"].ToString();
-                      
+
                 }
             }
         }
+
+        private void On_InspectionPlan_Load(object sender, EventArgs e)
+        {
+            conn = new OleDbConnection(sConnection);
+            daInspectionPlan = new OleDbDataAdapter(sSelectInspectionPlanBez, conn);
+
+            OleDbCommandBuilder cb = new OleDbCommandBuilder(daInspectionPlan);
+
+            this.ds = new DataSet();
+            try
+            {
+                conn.Open();
+                daInspectionPlan.Fill(ds, "InspectionPlan");
+                conn.Close();
+
+                bindingSource1.DataSource = ds.Tables["InspectionPlan"];
+
+                cb_InspectionPlanName.DataSource = bindingSource1;
+                cb_InspectionPlanName.DisplayMember = "InspectionPlanName";
+
+                SetCommentText(ds);
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show("Error while reading Access- Data : " + exception.Message);
+            }
+            finally
+            {
+                conn.Close();
+            }
+
+        }
+
+        public void ReadIniData(string sFileName)
+        {
+            ClassIniFile classIniFile = new ClassIniFile(sFileName);
+            ClassDaten.structSystemData.sActualInspectionPlan = classIniFile.ReadString(INI_SECTION, "ActualInspectionPlan", "0");
+
+
+
+
+
+        }
+
+
 
         public void WriteIniData(string sFileName)
         {
@@ -136,6 +176,9 @@ namespace CS_KEHRATEC
         {
 
         }
+
+
+
 
     }
 }

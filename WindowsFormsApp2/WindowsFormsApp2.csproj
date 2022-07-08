@@ -81,6 +81,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Form_01_Main.resx">
+      <DependentUpon>Form_01_Main.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form_02_InspectionPlanLoad.resx">
       <DependentUpon>Form_02_InspectionPlanLoad.cs</DependentUpon>
     </EmbeddedResource>
