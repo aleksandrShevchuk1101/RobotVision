@@ -127,9 +127,75 @@ namespace CS_KEHRATEC
             Form_55_Config_DIDO_32 form_Config_DIDO = new Form_55_Config_DIDO_32();
             Form_81_ChangePassword form_ChangePassword=new Form_81_ChangePassword();
 
+            btn_F2_Stop.Enabled = false;
+
+            //Make unneeded menu options invisible
+
+            SetUnitOptions();
+
+            //Set all measurement program labels
+            SetMesProgLabels();
+            ClassDaten.structSystemData.bNewInspectionPlanLoaded = false;
+
+            // Initialize IO
+            //**
+
+            //Initialisiere Halcon
+
+            Thread.CurrentThread.Name = "Main";
+            //IntPtr iPA=Process.Ge
+
+
+            InstanceObjects();
+
+            //Activate IO thread
+            IOThread = new Thread(new ThreadStart(myIOAppRun));
+            IOThread.Name = "IOThread";
+            IOThread.IsBackground = true;
+            //If there is more than one processor, set higher priority
+            if (ClassDaten.structSystemData.iProcessorCount>1)
+            {
+                IOThread.Priority = ThreadPriority.AboveNormal;
+            }
+
+            IOThread.Start();
+
+            ClassDaten.structSystemData.bNewInspectionPlanLoaded = true;
+            ClassDBFunctions.ReadMesProgCounterData();
+            ClassDBFunctions.ReadMesUnitCounterData();
+
+            toolStripStatusLabel.Text = "Program started";
+
+            //ClassHalconApplication.SetBigWindow(true);
+            timer1.Enabled = true;
+
+            ClassDaten.structSystemData.i_OP_PictureNr = 1;
+            ClassDaten.structSystemData.iActualCamNr = 1;
+
+            tabControl.TabPages[0].Text="Image Camera " + ClassDaten.structSystemData.iActualCamNr;
+
+            switch (ClassDaten.structOptionData.iUnitType)
+            {
+                case (int)ClassDaten.UnitTyp.RobotVision:
+                    Start();
+                    break;
+            }
+
+        }
+
+        private void AbortThread()
+        {
+            ClassDaten.structSystemData.bIORunState = false;
+
+
 
 
         }
+
+
+
+
+
 
         private void btn_ProcessMode_Click()
         {
@@ -175,6 +241,37 @@ namespace CS_KEHRATEC
         }
 
         private void Form_01_Main_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_MesControl_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public bool IsAllowed(int Mode)
+        {
+            if (ClassDaten.structPassword.sActUserName!=string.Empty)
+            {
+                if (ClassDaten.structPassword.bAdvisorPassword3_OK)
+                    ClassDaten.structPassword.sActUserName = "Admin";
+                lbl_UserLevel.Text=ClassDaten.structPassword.sActUserName;
+            }
+            else
+            {
+                if (ClassDaten.structPassword.bSupervisorPassword_OK)
+                {
+                    ClassDaten.structSystemData.sUserLevel = "SUPERVISOR";
+                    ClassDaten.structPassword.sActUserName = "";
+
+                }
+            }
+
+        }
+
+
+        private void ShowPasswordLevel()
         {
 
         }

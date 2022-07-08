@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="ClassDaten.cs" />
     <Compile Include="ClassDBFunctions.cs" />
+    <Compile Include="ClassDLLImports.cs" />
     <Compile Include="ClassIniFile.cs" />
     <Compile Include="Form_01_Main.cs">
       <SubType>Form</SubType>
