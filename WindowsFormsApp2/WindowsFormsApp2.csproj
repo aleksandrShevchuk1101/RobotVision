@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="halcondotnet, Version=19.11.0.0, Culture=neutral, PublicKeyToken=4973bed59ddbf2b8, processorArchitecture=MSIL">
+      <HintPath>..\packages\HalconDotNet.19.11.0\lib\net35\halcondotnet.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +64,144 @@
     <Compile Include="Form_02_InspectionPlanLoad.Designer.cs">
       <DependentUpon>Form_02_InspectionPlanLoad.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_03_InspectionPlanEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_03_InspectionPlanEdit.Designer.cs">
+      <DependentUpon>Form_03_InspectionPlanEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_04_ShowImage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_04_ShowImage.Designer.cs">
+      <DependentUpon>Form_04_ShowImage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_05_InputString.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_05_InputString.Designer.cs">
+      <DependentUpon>Form_05_InputString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_06_SavePictureSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_06_SavePictureSelect.Designer.cs">
+      <DependentUpon>Form_06_SavePictureSelect.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_07_CameraActivation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_07_CameraActivation.Designer.cs">
+      <DependentUpon>Form_07_CameraActivation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_10_CameraCalibration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_10_CameraCalibration.Designer.cs">
+      <DependentUpon>Form_10_CameraCalibration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_11_UserParameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_11_UserParameter.Designer.cs">
+      <DependentUpon>Form_11_UserParameter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_12_ShowProcessData.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_12_ShowProcessData.Designer.cs">
+      <DependentUpon>Form_12_ShowProcessData.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_13_MotionControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_13_MotionControl.Designer.cs">
+      <DependentUpon>Form_13_MotionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_14_MeasurementTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_14_MeasurementTool.Designer.cs">
+      <DependentUpon>Form_14_MeasurementTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_15_Regions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_15_Regions.Designer.cs">
+      <DependentUpon>Form_15_Regions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_16_AnalogMeasurementTool.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_16_AnalogMeasurementTool.Designer.cs">
+      <DependentUpon>Form_16_AnalogMeasurementTool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_17_MotionControl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_17_MotionControl.Designer.cs">
+      <DependentUpon>Form_17_MotionControl.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_19_SimInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_19_SimInput.Designer.cs">
+      <DependentUpon>Form_19_SimInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_20_DataRoot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_20_DataRoot.Designer.cs">
+      <DependentUpon>Form_20_DataRoot.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_21_MesProgEdit.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_21_MesProgEdit.Designer.cs">
+      <DependentUpon>Form_21_MesProgEdit.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_22_RoboterDataInput.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_22_RoboterDataInput.Designer.cs">
+      <DependentUpon>Form_22_RoboterDataInput.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_23_MesProgCalibration.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_23_MesProgCalibration.Designer.cs">
+      <DependentUpon>Form_23_MesProgCalibration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_30_Messages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_30_Messages.Designer.cs">
+      <DependentUpon>Form_30_Messages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_31_TCP_IP_Socket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_31_TCP_IP_Socket.Designer.cs">
+      <DependentUpon>Form_31_TCP_IP_Socket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_32_Modbus_TCP.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_32_Modbus_TCP.Designer.cs">
+      <DependentUpon>Form_32_Modbus_TCP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_33_PLC_Socket.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_33_PLC_Socket.Designer.cs">
+      <DependentUpon>Form_33_PLC_Socket.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_40_BDE.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_40_BDE.Designer.cs">
+      <DependentUpon>Form_40_BDE.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_41_Packaging.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -73,11 +214,77 @@
     <Compile Include="Form_42_Counter.Designer.cs">
       <DependentUpon>Form_42_Counter.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_43_Statistic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_43_Statistic.Designer.cs">
+      <DependentUpon>Form_43_Statistic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_51_LightSelect.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_51_LightSelect.Designer.cs">
+      <DependentUpon>Form_51_LightSelect.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_52_Smartek_LightControler.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form_52_Smartek_LightControler.Designer.cs">
       <DependentUpon>Form_52_Smartek_LightControler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_53_Sick_PLR.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_53_Sick_PLR.Designer.cs">
+      <DependentUpon>Form_53_Sick_PLR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_55_Config_DIDO_32.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_55_Config_DIDO_32.Designer.cs">
+      <DependentUpon>Form_55_Config_DIDO_32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_56_Options.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_56_Options.Designer.cs">
+      <DependentUpon>Form_56_Options.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_80_Password.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_80_Password.Designer.cs">
+      <DependentUpon>Form_80_Password.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_81_ChangePassword.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_81_ChangePassword.Designer.cs">
+      <DependentUpon>Form_81_ChangePassword.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_82_Autorisation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_82_Autorisation.Designer.cs">
+      <DependentUpon>Form_82_Autorisation.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_91_Info.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_91_Info.Designer.cs">
+      <DependentUpon>Form_91_Info.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_95_DIDO_32.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_95_DIDO_32.Designer.cs">
+      <DependentUpon>Form_95_DIDO_32.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form_96_AIAO.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_96_AIAO.Designer.cs">
+      <DependentUpon>Form_96_AIAO.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -96,6 +303,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
