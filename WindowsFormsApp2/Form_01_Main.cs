@@ -89,7 +89,7 @@ namespace CS_KEHRATEC
             this.Width = 1280;
             this.Height = 1024;
 
-            GetAllPointer();
+            //GetAllPointer();
 
             // Instantiate classes to read the values
             Form_56_Options form_Options = new Form_56_Options();
@@ -110,7 +110,7 @@ namespace CS_KEHRATEC
             form_InspectionPlanLoad.LoadAllInspectionPlanData(ClassDaten.structSystemData.sActualInspectionPlan);
             ClassDaten.structSystemData.iRequestedTyp = ClassDaten.structRoboterData.iTypNr;
             form_InspectionPlanLoad.Dispose();
-            SetCamButtons();
+            //SetCamButtons();
 
             //Load active cameras
             Form_07_CameraActivation formCameraActivation = new Form_07_CameraActivation();
@@ -193,10 +193,6 @@ namespace CS_KEHRATEC
         }
 
 
-
-
-
-
         private void btn_ProcessMode_Click()
         {
             if (!ClassDaten.structSystemData.bProcessMode)
@@ -247,25 +243,73 @@ namespace CS_KEHRATEC
 
         private void btn_MesControl_Click(object sender, EventArgs e)
         {
-
-        }
-
-        public bool IsAllowed(int Mode)
-        {
-            if (ClassDaten.structPassword.sActUserName!=string.Empty)
+            if (IsAllowed((int)ClassDaten.PasswordTyp.Advisor1))
             {
-                if (ClassDaten.structPassword.bAdvisorPassword3_OK)
-                    ClassDaten.structPassword.sActUserName = "Admin";
-                lbl_UserLevel.Text=ClassDaten.structPassword.sActUserName;
+                ClassDaten.structSystemData.bMesControlFlag= !ClassDaten.structSystemData.bMesControlFlag;
+                if (ClassDaten.structSystemData.bMesControlFlag)
+                {
+                    btn_MesControl.BackColor = Color.Red;
+                    ClassDaten.structSystemData.sOldInspectionPlan = ClassDaten.structSystemData.sActualInspectionPlan;
+                    ClassDaten.structSystemData.sActualInspectionPlan = "Kalibrier- Programm";
+                }
+                else
+                {
+                    btn_MesControl.BackColor = Color.LightGray;
+                    ClassDaten.structSystemData.sActualInspectionPlan = ClassDaten.structSystemData.sOldInspectionPlan;
+
+                }
+
             }
             else
             {
-                if (ClassDaten.structPassword.bSupervisorPassword_OK)
-                {
-                    ClassDaten.structSystemData.sUserLevel = "SUPERVISOR";
-                    ClassDaten.structPassword.sActUserName = "";
+                ClassDaten.structSystemData.bMesControlFlag = false;
+                btn_MesControl.BackColor = Color.LightGray;
+            }
+        }
 
-                }
+        private void btn_Cam_Click(object sender, EventArgs e)
+        {
+            Button myButton = (Button)sender;
+            int iCamNr = Convert.ToInt32(myButton.Tag);
+            SetActualCamNr(iCamNr);
+        }
+
+
+
+        public bool IsAllowed(int Mode)
+        {
+            Form_80_Password form_80_Password = new Form_80_Password();
+            bool bPassWordOk = false;
+
+            switch (Mode)
+            {
+                case (int)ClassDaten.PasswordTyp.Advisor1:
+                    if (ClassDaten.structPassword.bAdvisorPassword1_OK ||
+                        ClassDaten.structPassword.bAdvisorPassword2_OK ||
+                        ClassDaten.structPassword.bAdvisorPassword3_OK ||
+                        ClassDaten.structPassword.bSupervisorPassword_OK)
+                        bPassWordOk = true;
+                    break;
+                case (int)ClassDaten.PasswordTyp.Advisor2:
+                    if (ClassDaten.structPassword.bAdvisorPassword2_OK ||
+                        ClassDaten.structPassword.bAdvisorPassword3_OK ||
+                        ClassDaten.structPassword.bSupervisorPassword_OK)
+                           bPassWordOk = true;
+                    break;
+                case (int)ClassDaten.PasswordTyp.Supervisor:
+                    if (ClassDaten.structPassword.bSupervisorPassword_OK)        
+                        bPassWordOk = true;             
+                    break;
+            }
+            ShowPasswordLevel();
+
+            if (bPassWordOk)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
 
         }
@@ -273,6 +317,258 @@ namespace CS_KEHRATEC
 
         private void ShowPasswordLevel()
         {
+            if (ClassDaten.structPassword.sActUserName!=string.Empty)
+            {
+                if (ClassDaten.structPassword.bAdvisorPassword3_OK)
+                    ClassDaten.structPassword.sActUserName = "Admin";
+
+                lbl_UserLevel.Text = ClassDaten.structPassword.sActUserName;
+            }
+            else
+            {
+                if (ClassDaten.structPassword.bSupervisorPassword_OK)
+                {
+                    ClassDaten.structSystemData.sUserLevel = "SUPERVISIOR";
+                    ClassDaten.structPassword.sActUserName = "";
+                    //Menue_Configuration_Options.Visible = true;
+                }
+                else
+                {
+                    if (ClassDaten.structPassword.bAdvisorPassword1_OK)
+                        ClassDaten.structSystemData.sUserLevel = "ADVISOR1";
+
+                    else
+                    {
+                        if (ClassDaten.structPassword.bAdvisorPassword2_OK)
+                            ClassDaten.structSystemData.sUserLevel = "ADVISOR1";
+                        else
+                        {
+                            if (ClassDaten.structPassword.bAdvisorPassword3_OK)
+                                ClassDaten.structSystemData.sUserLevel = "Admin";
+                            else
+
+                                ClassDaten.structSystemData.sUserLevel = "";
+                        }
+                    }
+
+                   // Menue_Configuration_Options.Visible = false;
+                }
+                lbl_UserLevel.Text = ClassDaten.structSystemData.sUserLevel;
+            }
+        }
+
+        private void SetActualCamNr(int iNr)
+        {
+            if (ClassDaten.structCamPara[iNr - 1].bActiv)
+            {
+                ClassDaten.structSystemData.iActualCamNr = iNr;
+                SetMesProgLabels();
+            }
+        }
+
+        private void SetMesProgLabels()
+        {
+            int k, i;
+            int iRowDistance = 40;
+            float fSize = 16F;
+            listBoxMesValue.Controls.Clear();
+
+            lbl_MesProgPtr = new Label[ClassDaten.structSystemData.iMesProgramsFound];
+            numUpDown_Col0Ptr = new NumericUpDown[ClassDaten.structSystemData.iMesProgramsFound];
+            numUpDown_Col1Ptr= new NumericUpDown[ClassDaten.structSystemData.iMesProgramsFound];
+            numUpDown_Col2Ptr = new NumericUpDown[ClassDaten.structSystemData.iMesProgramsFound];
+
+            lbl_Col3Ptr = new Label[ClassDaten.structSystemData.iMesProgramsFound];
+            lbl_UnitPtr= new Label[ClassDaten.structSystemData.iMesProgramsFound];
+
+
+            for (i=0,k = 0; k < ClassDaten.structSystemData.iMesProgramsFound; k++)
+            {
+                //Отфильтровать программы измерений для текущей камеры
+                if (ClassDaten.structMesProgData[k].iCameraNr== ClassDaten.structSystemData.iActualCamNr)
+                {
+                    lbl_MesProgPtr[k]=new Label();
+                    lbl_MesProgPtr[i].Name = "label" + i;
+                    lbl_MesProgPtr[i].Location = new System.Drawing.Point(17, 20 + (i * iRowDistance));
+                    lbl_MesProgPtr[i].Text = string.Empty;
+                    lbl_MesProgPtr[i].TextAlign = ContentAlignment.MiddleLeft;
+                    lbl_MesProgPtr[i].Size = new Size(340, 31);
+                    lbl_MesProgPtr[i].Font = new Font("Microsoft Sans Serif", fSize, FontStyle.Bold, GraphicsUnit.Point, (byte)(0));
+
+                    listBoxMesValue.Controls.Add(lbl_MesProgPtr[i]);
+
+                    // Создаем минимальный допуск к элементу управления
+                    numUpDown_Col0Ptr[i] = new NumericUpDown();
+                    numUpDown_Col0Ptr[i].Location = new Point(370, 20 + (i* iRowDistance));
+                    numUpDown_Col0Ptr[i].Name = "numUpDownCol0"+i;
+                    numUpDown_Col0Ptr[i].Size = new Size(80,24);
+                    numUpDown_Col0Ptr[i].TabIndex = 1;
+                    numUpDown_Col0Ptr[i].DecimalPlaces = 2;
+                    numUpDown_Col0Ptr[i].Increment = (decimal)0.01;
+                    numUpDown_Col0Ptr[i].Font = new Font("Microsoft Sans Serif", fSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    numUpDown_Col0Ptr[i].Minimum = (decimal)-100.0;
+                    numUpDown_Col0Ptr[i].Maximum= (decimal)100.0;
+                    numUpDown_Col0Ptr[i].Value = 0;
+                    numUpDown_Col0Ptr[i].TextAlign = HorizontalAlignment.Right;
+                    numUpDown_Col0Ptr[i].Validating += new CancelEventHandler(this.OnValidating);
+
+                    listBoxMesValue.Controls.Add(numUpDown_Col0Ptr[i]);
+
+                    // Создаем уставку для управления
+                    numUpDown_Col1Ptr[i] = new NumericUpDown();
+                    numUpDown_Col1Ptr[i].Location = new System.Drawing.Point(460, 20 + (i * iRowDistance));
+                    numUpDown_Col1Ptr[i].Name = "numUpDownCol1" + i;
+                    numUpDown_Col1Ptr[i].Size = new System.Drawing.Size(80, 24);
+                    numUpDown_Col1Ptr[i].TabIndex = 1;
+                    numUpDown_Col1Ptr[i].DecimalPlaces = 2;
+                    numUpDown_Col1Ptr[i].Increment = (decimal)0.01;
+                    numUpDown_Col1Ptr[i].Font = new System.Drawing.Font("Microsoft Sans Serif", fSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    numUpDown_Col1Ptr[i].Minimum = (decimal)0.0;
+                    numUpDown_Col1Ptr[i].Maximum = (decimal)1000.0;
+                    numUpDown_Col1Ptr[i].Value = 0;
+                    numUpDown_Col1Ptr[i].TextAlign = HorizontalAlignment.Right;
+                    numUpDown_Col1Ptr[i].Validating += new System.ComponentModel.CancelEventHandler(this.OnValidating);
+
+                    listBoxMesValue.Controls.Add(numUpDown_Col1Ptr[i]);
+
+                    // Max Toleranz zum Control kreieren
+                    numUpDown_Col2Ptr[i] = new NumericUpDown();
+                    numUpDown_Col2Ptr[i].Location = new System.Drawing.Point(550, 20 + (i * iRowDistance));
+                    numUpDown_Col2Ptr[i].Name = "numUpDownCol2" + i;
+                    numUpDown_Col2Ptr[i].Size = new System.Drawing.Size(80, 24);
+                    numUpDown_Col2Ptr[i].TabIndex = 1;
+                    numUpDown_Col2Ptr[i].DecimalPlaces = 2;
+                    numUpDown_Col2Ptr[i].Increment = (decimal)0.01;
+                    numUpDown_Col2Ptr[i].Font = new System.Drawing.Font("Microsoft Sans Serif", fSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    numUpDown_Col2Ptr[i].Minimum = (decimal)0.0;
+                    numUpDown_Col2Ptr[i].Maximum = (decimal)100.0;
+                    numUpDown_Col2Ptr[i].Value = 0;
+                    numUpDown_Col2Ptr[i].TextAlign = HorizontalAlignment.Right;
+                    numUpDown_Col2Ptr[i].Validating += new System.ComponentModel.CancelEventHandler(this.OnValidating);
+
+                    listBoxMesValue.Controls.Add(numUpDown_Col2Ptr[i]);
+
+
+                    // Создаем фактическое значение для элемента управления
+
+                    // Istwert zum Control kreieren
+                    lbl_Col3Ptr[i] = new Label();
+                    lbl_Col3Ptr[i].Name = "lblCol3" + i;
+                    lbl_Col3Ptr[i].Location = new System.Drawing.Point(640, 20 + (i * iRowDistance));
+                    lbl_Col3Ptr[i].Text = string.Empty;
+                    lbl_Col3Ptr[i].Size = new System.Drawing.Size(80, 31);
+                    lbl_Col3Ptr[i].Font = new System.Drawing.Font("Microsoft Sans Serif", fSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    lbl_Col3Ptr[i].TextAlign = ContentAlignment.MiddleRight;
+
+                    listBoxMesValue.Controls.Add(lbl_Col3Ptr[i]);
+
+                    // Unit (Einheit) zum Control kreieren
+                    lbl_UnitPtr[i] = new Label();
+                    lbl_UnitPtr[i].Name = "lblCol4" + i;
+                    lbl_UnitPtr[i].Location = new System.Drawing.Point(730, 20 + (i * iRowDistance));
+                    lbl_UnitPtr[i].Text = string.Empty;
+                    lbl_UnitPtr[i].Size = new System.Drawing.Size(90, 31);
+                    lbl_UnitPtr[i].Font = new System.Drawing.Font("Microsoft Sans Serif", fSize, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    lbl_UnitPtr[i].TextAlign = ContentAlignment.MiddleLeft;
+
+                    listBoxMesValue.Controls.Add(lbl_UnitPtr[i]);
+
+                    i++;
+
+                }
+
+            }
+
+
+            for (k = 0, i=0;  k< ClassDaten.structSystemData.iMesProgramsFound; k++)
+            {
+                if (ClassDaten.structMesProgData[k].iCameraNr == ClassDaten.structSystemData.iActualCamNr)
+                {
+                    if (ClassDaten.structMesProgData[k].sMesProgName == "")
+                    {
+                        lbl_MesProgPtr[i].Visible = false;
+                        numUpDown_Col0Ptr[i].Visible = false;
+                        numUpDown_Col1Ptr[i].Visible = false;
+                        numUpDown_Col2Ptr[i].Visible = false;
+
+                        lbl_Col3Ptr[i].Visible = false;
+                        lbl_UnitPtr[i].Visible = false;
+                    }
+                    else
+                    {
+                        lbl_MesProgPtr[i].Text = ClassDaten.structMesProgData[k].sMesProgName;
+                        lbl_Col3Ptr[i].Text = string.Format("{0:000.000}", ClassDaten.structMesProgData[k].dRealMesValue);
+                        lbl_UnitPtr[i].Text = string.Format("{0:G}", ClassDaten.structMesProgData[k].sUnit);
+
+
+                        lbl_MesProgPtr[i].Visible = true;
+                        numUpDown_Col0Ptr[i].Visible = true;
+                        numUpDown_Col1Ptr[i].Visible = true;
+                        numUpDown_Col2Ptr[i].Visible = true;
+                        lbl_Col3Ptr[i].Visible = true;
+                        lbl_UnitPtr[i].Visible = true;
+
+                        if (ClassDaten.structMesProgData[k].bMesProgActiv)
+                        {
+                            lbl_MesProgPtr[i].Enabled = true;
+                            numUpDown_Col0Ptr[i].Enabled = true;
+                            numUpDown_Col1Ptr[i].Enabled = true;
+                            numUpDown_Col2Ptr[i].Enabled = true;
+                            lbl_Col3Ptr[i].Enabled = true;
+                            lbl_UnitPtr[i].Enabled = true;
+                            lbl_MesProgPtr[i].BackColor = Color.LightGray;
+                            numUpDown_Col0Ptr[i].BackColor = Color.LightGray;
+                            numUpDown_Col1Ptr[i].BackColor = Color.LightGray;
+                            numUpDown_Col2Ptr[i].BackColor = Color.LightGray;
+                            lbl_Col3Ptr[i].BackColor = Color.Lime;
+
+
+                        }
+                        else
+                        {
+                            //Messprogramm vorhanden aber nicht aktiv
+                            lbl_MesProgPtr[i].Enabled = false;
+                            numUpDown_Col0Ptr[i].Enabled = false;
+                            numUpDown_Col1Ptr[i].Enabled = false;
+                            numUpDown_Col2Ptr[i].Enabled = false;
+                            lbl_Col3Ptr[i].Enabled = false;
+                            lbl_UnitPtr[i].Enabled = false;
+                            lbl_MesProgPtr[i].BackColor = Color.White;
+                            numUpDown_Col0Ptr[i].BackColor = Color.White;
+                            numUpDown_Col1Ptr[i].BackColor = Color.White;
+                            numUpDown_Col2Ptr[i].BackColor = Color.White;
+                            lbl_Col3Ptr[i].BackColor = Color.White;
+                        }
+
+                    }
+                    i++;
+                }
+            }
+        }
+
+        private void btn_BDE_Click(object sender, EventArgs e)
+        {
+            Form_40_BDE formBDE = new Form_40_BDE();
+            formBDE.ShowDialog();
+
+        }
+
+        private void btn_Edit_Tolerance_Click(object sender, EventArgs e)
+        {
+            bToleranceEditMode = !bToleranceEditMode;
+            ClassDLLImports.LoadSoftkeyboard(true);
+
+            switch (ClassDaten.structOptionData.iUnitType)
+            {
+                case (int)ClassDaten.UnitTyp.StampControl:
+                    ToleranceInput();
+                    break;
+                default:
+                    if (IsAllowed((int)ClassDaten.PasswordTyp.Advisor2))
+                       ToleranceInput();
+                    break;
+
+            }
 
         }
 
@@ -283,6 +579,122 @@ namespace CS_KEHRATEC
 
 
         }
+
+        private void btn_Error_Click(object sender, EventArgs e)
+        {
+            if (!formMessages.Created)
+            {
+                formMessages.Visible = true;
+                formMessages.Show();
+            }
+            else
+            {
+                formMessages.Visible = true;
+                formMessages.Activate();
+
+            }
+        }
+
+        private void btn_LightControl_Click(object sender, EventArgs e)
+        {
+            if (IsAllowed((int)ClassDaten.PasswordTyp.Advisor2))
+            {
+                switch (ClassDaten.structOptionData.iUnitType)
+                {
+                    case (int)ClassDaten.UnitTyp.SlitDisk1:
+                    case (int)ClassDaten.UnitTyp.GlasDisk1:
+                        Form_52_Smartek_LightControler formSmartekLightControler;
+                        formSmartekLightControler = new Form_52_Smartek_LightControler(ClassDaten.structSystemData.sActualInspectionPlan, (int)ClassDaten.LightTyp.Flat, (int)ClassDaten.LightTyp.Ring_DarkField);
+                        formSmartekLightControler.ShowDialog();
+                        break;
+                }
+            }
+        }
+
+        private void btn_LifePicture_Click(object sender, EventArgs e)
+        {
+            if (!ProofRunstate())
+            {
+                tabControl.SelectedIndex = 0;
+                ClassDaten.structSystemData.bLifeImageFlag=!ClassDaten.structSystemData.bLifeImageFlag;
+                if (ClassDaten.structSystemData.bLifeImageFlag)
+                    btn_LifePicture.BackColor = Color.Red;
+                else
+                    btn_LifePicture.BackColor = Color.LightGray;
+            }
+            else
+            {
+                ClassDaten.structSystemData.bLifeImageFlag = false;
+                btn_LifePicture.BackColor = Color.LightGray;
+            }
+        }
+
+        private void ToleranceInput()
+        {
+            int i, k;
+
+
+            if (bToleranceEditMode)
+            {
+                btn_Edit_Tolerance.Text = "Change stop";
+                for (k = 0, i = 0; k < ClassDaten.structSystemData.iMesProgramsFound; k++)
+                {
+                    if (ClassDaten.structMesProgData[k].iCameraNr == ClassDaten.structSystemData.iActualCamNr)
+                    {
+
+                        numUpDown_Col0Ptr[i].Value = Convert.ToDecimal(ClassDaten.structMesProgData[k].dMinTol);
+                        numUpDown_Col1Ptr[i].Value = Convert.ToDecimal(ClassDaten.structMesProgData[k].dNominalValue);
+                        numUpDown_Col2Ptr[i].Value = Convert.ToDecimal(ClassDaten.structMesProgData[k].dMaxTol);
+
+
+                        if (ClassDaten.structMesProgData[k].bMesProgActiv)
+                        {
+                            numUpDown_Col0Ptr[i].Enabled = true;
+                            numUpDown_Col1Ptr[i].Enabled = true;
+                            numUpDown_Col2Ptr[i].Enabled = true;
+                        }
+                        i++;
+                    }
+                }
+            }
+            else
+            {
+                btn_Edit_Tolerance.Text = "Change";
+                for (k = 0,i=0;  k< ClassDaten.structSystemData.iMesProgramsFound; k++)
+                {
+                    if (ClassDaten.structMesProgData[k].iCameraNr == ClassDaten.structSystemData.iActualCamNr)
+                    {
+                        if (i< ClassDaten.structSystemData.iMesProgramsFound)
+                        {
+                            numUpDown_Col0Ptr[i].Enabled = false;
+                            numUpDown_Col1Ptr[i].Enabled = false;
+                            numUpDown_Col2Ptr[i].Enabled = false;
+                            i++;
+                        }
+                    }
+                }
+
+            }
+        }
+
+        private void btn_InspectionPlanEdit_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private bool ProofRunstate()
+        {
+            if (ClassDaten.structSystemData.bRunState)
+            {
+                MessageBox.Show("Please push the STOP- Button first !!!");
+                return false;
+            }
+            else
+                return true;
+
+        }
+
+
     }
 
 

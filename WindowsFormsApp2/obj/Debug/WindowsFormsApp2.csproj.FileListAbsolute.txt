@@ -18,3 +18,12 @@ F:\Projects\C#\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResour
 F:\Projects\C#\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
 F:\Projects\C#\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
 F:\Projects\C#\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.AssemblyReference.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.SuggestedBindingRedirects.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\CS_KEHRATEC.Form_01_Main.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\CS_KEHRATEC.Form_02_InspectionPlanLoad.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.Properties.Resources.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.GenerateResource.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb

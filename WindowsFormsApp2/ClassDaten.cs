@@ -730,7 +730,7 @@ namespace CS_KEHRATEC
         //    struct
         //}
 
-        public enum PasswordTyp {Advisor1, Advisor2, Advisor3, Advisor };
+        public enum PasswordTyp {Advisor1, Advisor2, Advisor3, Supervisor };
 
         public enum CameraTyp { LineScan, MatrixPosControl, Matrix };
 

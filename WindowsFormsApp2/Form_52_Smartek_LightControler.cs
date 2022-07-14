@@ -16,5 +16,12 @@ namespace CS_KEHRATEC
         {
             InitializeComponent();
         }
+
+        public Form_52_Smartek_LightControler(string sInspectionPlanName, int iLightTyp_1, int iLightTyp_2)
+        {
+            InitializeComponent();
+
+        }
+
     }
 }

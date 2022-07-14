@@ -29,9 +29,13 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_01_Main));
             this.btn_F2_Stop = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.lbl_UserLevel = new System.Windows.Forms.Label();
+            this.label80 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -44,15 +48,26 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_MesControl = new System.Windows.Forms.Button();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label80 = new System.Windows.Forms.Label();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.lbl_UserLevel = new System.Windows.Forms.Label();
+            this.listBoxMesValue = new System.Windows.Forms.ListBox();
+            this.btn_BDE = new System.Windows.Forms.Button();
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_Edit_Tolerance = new System.Windows.Forms.Button();
+            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_Error = new System.Windows.Forms.Button();
+            this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_LightControl = new System.Windows.Forms.Button();
+            this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_LifePicture = new System.Windows.Forms.Button();
+            this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
+            this.btn_InspectionPlanEdit = new System.Windows.Forms.Button();
+            this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.tabControl.SuspendLayout();
+            this.tpPicture.SuspendLayout();
             this.groupBox3.SuspendLayout();
-            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_F2_Stop
@@ -85,6 +100,36 @@
             this.groupBox2.Size = new System.Drawing.Size(358, 831);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.lbl_UserLevel);
+            this.groupBox4.Controls.Add(this.label80);
+            this.groupBox4.Location = new System.Drawing.Point(12, 481);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(338, 50);
+            this.groupBox4.TabIndex = 2;
+            this.groupBox4.TabStop = false;
+            // 
+            // lbl_UserLevel
+            // 
+            this.lbl_UserLevel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lbl_UserLevel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lbl_UserLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbl_UserLevel.Location = new System.Drawing.Point(90, 15);
+            this.lbl_UserLevel.Name = "lbl_UserLevel";
+            this.lbl_UserLevel.Size = new System.Drawing.Size(234, 27);
+            this.lbl_UserLevel.TabIndex = 19;
+            this.lbl_UserLevel.Text = "Userlevel";
+            // 
+            // label80
+            // 
+            this.label80.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label80.Location = new System.Drawing.Point(9, 16);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(53, 24);
+            this.label80.TabIndex = 0;
+            this.label80.Text = "User";
             // 
             // statusStrip1
             // 
@@ -122,6 +167,8 @@
             // 
             // tpPicture
             // 
+            this.tpPicture.Controls.Add(this.listBoxMesValue);
+            this.tpPicture.Controls.Add(this.btn_Edit_Tolerance);
             this.tpPicture.Location = new System.Drawing.Point(4, 22);
             this.tpPicture.Name = "tpPicture";
             this.tpPicture.Padding = new System.Windows.Forms.Padding(3);
@@ -169,7 +216,13 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBox3.Controls.Add(this.btn_MesControl);
+            this.groupBox3.Controls.Add(this.btn_BDE);
+            this.groupBox3.Controls.Add(this.btn_Error);
+            this.groupBox3.Controls.Add(this.btn_LightControl);
+            this.groupBox3.Controls.Add(this.btn_LifePicture);
+            this.groupBox3.Controls.Add(this.btn_InspectionPlanEdit);
             this.groupBox3.Location = new System.Drawing.Point(0, 27);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(1909, 65);
@@ -187,35 +240,86 @@
             this.btn_MesControl.UseVisualStyleBackColor = true;
             this.btn_MesControl.Click += new System.EventHandler(this.btn_MesControl_Click);
             // 
-            // label80
+            // listBoxMesValue
             // 
-            this.label80.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label80.Location = new System.Drawing.Point(9, 16);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(53, 24);
-            this.label80.TabIndex = 0;
-            this.label80.Text = "User";
+            this.listBoxMesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxMesValue.FormattingEnabled = true;
+            this.listBoxMesValue.ItemHeight = 20;
+            this.listBoxMesValue.Location = new System.Drawing.Point(17, 58);
+            this.listBoxMesValue.Name = "listBoxMesValue";
+            this.listBoxMesValue.Size = new System.Drawing.Size(831, 484);
+            this.listBoxMesValue.TabIndex = 141;
             // 
-            // groupBox4
+            // btn_BDE
             // 
-            this.groupBox4.Controls.Add(this.lbl_UserLevel);
-            this.groupBox4.Controls.Add(this.label80);
-            this.groupBox4.Location = new System.Drawing.Point(12, 481);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(338, 50);
-            this.groupBox4.TabIndex = 2;
-            this.groupBox4.TabStop = false;
+            this.btn_BDE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_BDE.Location = new System.Drawing.Point(440, 11);
+            this.btn_BDE.Name = "btn_BDE";
+            this.btn_BDE.Size = new System.Drawing.Size(48, 48);
+            this.btn_BDE.TabIndex = 24;
+            this.toolTip2.SetToolTip(this.btn_BDE, "LiveData");
+            this.btn_BDE.UseVisualStyleBackColor = true;
+            this.btn_BDE.Click += new System.EventHandler(this.btn_BDE_Click);
             // 
-            // lbl_UserLevel
+            // btn_Edit_Tolerance
             // 
-            this.lbl_UserLevel.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.lbl_UserLevel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.lbl_UserLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lbl_UserLevel.Location = new System.Drawing.Point(90, 15);
-            this.lbl_UserLevel.Name = "lbl_UserLevel";
-            this.lbl_UserLevel.Size = new System.Drawing.Size(234, 27);
-            this.lbl_UserLevel.TabIndex = 19;
-            this.lbl_UserLevel.Text = "Userlevel";
+            this.btn_Edit_Tolerance.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn_Edit_Tolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Edit_Tolerance.Location = new System.Drawing.Point(301, 567);
+            this.btn_Edit_Tolerance.Name = "btn_Edit_Tolerance";
+            this.btn_Edit_Tolerance.Size = new System.Drawing.Size(112, 27);
+            this.btn_Edit_Tolerance.TabIndex = 3;
+            this.btn_Edit_Tolerance.Text = "Ändern";
+            this.toolTip3.SetToolTip(this.btn_Edit_Tolerance, "System starten");
+            this.btn_Edit_Tolerance.UseVisualStyleBackColor = false;
+            this.btn_Edit_Tolerance.Click += new System.EventHandler(this.btn_Edit_Tolerance_Click);
+            // 
+            // btn_Error
+            // 
+            this.btn_Error.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.btn_Error.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Error.Location = new System.Drawing.Point(700, 11);
+            this.btn_Error.Name = "btn_Error";
+            this.btn_Error.Size = new System.Drawing.Size(48, 48);
+            this.btn_Error.TabIndex = 35;
+            this.toolTip4.SetToolTip(this.btn_Error, "Errormessages");
+            this.btn_Error.UseVisualStyleBackColor = false;
+            this.btn_Error.Click += new System.EventHandler(this.btn_Error_Click);
+            // 
+            // btn_LightControl
+            // 
+            this.btn_LightControl.BackColor = System.Drawing.Color.LightGray;
+            this.btn_LightControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_LightControl.Location = new System.Drawing.Point(169, 10);
+            this.btn_LightControl.Name = "btn_LightControl";
+            this.btn_LightControl.Size = new System.Drawing.Size(48, 48);
+            this.btn_LightControl.TabIndex = 16;
+            this.toolTip5.SetToolTip(this.btn_LightControl, "Light Control");
+            this.btn_LightControl.UseVisualStyleBackColor = false;
+            this.btn_LightControl.Click += new System.EventHandler(this.btn_LightControl_Click);
+            // 
+            // btn_LifePicture
+            // 
+            this.btn_LifePicture.BackColor = System.Drawing.Color.LightGray;
+            this.btn_LifePicture.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_LifePicture.Image = ((System.Drawing.Image)(resources.GetObject("btn_LifePicture.Image")));
+            this.btn_LifePicture.Location = new System.Drawing.Point(60, 10);
+            this.btn_LifePicture.Name = "btn_LifePicture";
+            this.btn_LifePicture.Size = new System.Drawing.Size(48, 48);
+            this.btn_LifePicture.TabIndex = 15;
+            this.toolTip6.SetToolTip(this.btn_LifePicture, "Lifeimage");
+            this.btn_LifePicture.UseVisualStyleBackColor = false;
+            this.btn_LifePicture.Click += new System.EventHandler(this.btn_LifePicture_Click);
+            // 
+            // btn_InspectionPlanEdit
+            // 
+            this.btn_InspectionPlanEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_InspectionPlanEdit.Location = new System.Drawing.Point(1151, 10);
+            this.btn_InspectionPlanEdit.Name = "btn_InspectionPlanEdit";
+            this.btn_InspectionPlanEdit.Size = new System.Drawing.Size(57, 48);
+            this.btn_InspectionPlanEdit.TabIndex = 17;
+            this.toolTip7.SetToolTip(this.btn_InspectionPlanEdit, "Edit Inspectionplan");
+            this.btn_InspectionPlanEdit.Click += new System.EventHandler(this.btn_InspectionPlanEdit_Click);
             // 
             // Form_01_Main
             // 
@@ -232,11 +336,12 @@
             this.Load += new System.EventHandler(this.Form_01_Main_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.tabControl.ResumeLayout(false);
+            this.tpPicture.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -262,6 +367,19 @@
         private System.Windows.Forms.Label label80;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label lbl_UserLevel;
+        private System.Windows.Forms.ListBox listBoxMesValue;
+        private System.Windows.Forms.Button btn_BDE;
+        private System.Windows.Forms.ToolTip toolTip2;
+        private System.Windows.Forms.Button btn_Edit_Tolerance;
+        private System.Windows.Forms.ToolTip toolTip3;
+        private System.Windows.Forms.Button btn_Error;
+        private System.Windows.Forms.ToolTip toolTip4;
+        private System.Windows.Forms.Button btn_LightControl;
+        private System.Windows.Forms.ToolTip toolTip5;
+        private System.Windows.Forms.Button btn_LifePicture;
+        private System.Windows.Forms.ToolTip toolTip6;
+        private System.Windows.Forms.Button btn_InspectionPlanEdit;
+        private System.Windows.Forms.ToolTip toolTip7;
     }
 }
 
