@@ -41,26 +41,31 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tpPicture = new System.Windows.Forms.TabPage();
+            this.listBoxMesValue = new System.Windows.Forms.ListBox();
+            this.btn_Edit_Tolerance = new System.Windows.Forms.Button();
             this.tpAllPictures = new System.Windows.Forms.TabPage();
             this.tpValues = new System.Windows.Forms.TabPage();
             this.tpManualMode_SlitDisk1 = new System.Windows.Forms.TabPage();
             this.tpManualMode_GlasDisk1 = new System.Windows.Forms.TabPage();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.btn_MesControl = new System.Windows.Forms.Button();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.listBoxMesValue = new System.Windows.Forms.ListBox();
             this.btn_BDE = new System.Windows.Forms.Button();
-            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
-            this.btn_Edit_Tolerance = new System.Windows.Forms.Button();
-            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_Error = new System.Windows.Forms.Button();
-            this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_LightControl = new System.Windows.Forms.Button();
-            this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_LifePicture = new System.Windows.Forms.Button();
-            this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
             this.btn_InspectionPlanEdit = new System.Windows.Forms.Button();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip3 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip4 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip5 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip6 = new System.Windows.Forms.ToolTip(this.components);
             this.toolTip7 = new System.Windows.Forms.ToolTip(this.components);
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menue_Help_Information = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
@@ -68,6 +73,7 @@
             this.tabControl.SuspendLayout();
             this.tpPicture.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // btn_F2_Stop
@@ -177,6 +183,29 @@
             this.tpPicture.Text = "Image";
             this.tpPicture.UseVisualStyleBackColor = true;
             // 
+            // listBoxMesValue
+            // 
+            this.listBoxMesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBoxMesValue.FormattingEnabled = true;
+            this.listBoxMesValue.ItemHeight = 20;
+            this.listBoxMesValue.Location = new System.Drawing.Point(6, 15);
+            this.listBoxMesValue.Name = "listBoxMesValue";
+            this.listBoxMesValue.Size = new System.Drawing.Size(831, 484);
+            this.listBoxMesValue.TabIndex = 141;
+            // 
+            // btn_Edit_Tolerance
+            // 
+            this.btn_Edit_Tolerance.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.btn_Edit_Tolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Edit_Tolerance.Location = new System.Drawing.Point(301, 567);
+            this.btn_Edit_Tolerance.Name = "btn_Edit_Tolerance";
+            this.btn_Edit_Tolerance.Size = new System.Drawing.Size(112, 27);
+            this.btn_Edit_Tolerance.TabIndex = 3;
+            this.btn_Edit_Tolerance.Text = "Ändern";
+            this.toolTip3.SetToolTip(this.btn_Edit_Tolerance, "System starten");
+            this.btn_Edit_Tolerance.UseVisualStyleBackColor = false;
+            this.btn_Edit_Tolerance.Click += new System.EventHandler(this.btn_Edit_Tolerance_Click);
+            // 
             // tpAllPictures
             // 
             this.tpAllPictures.Location = new System.Drawing.Point(4, 22);
@@ -240,16 +269,6 @@
             this.btn_MesControl.UseVisualStyleBackColor = true;
             this.btn_MesControl.Click += new System.EventHandler(this.btn_MesControl_Click);
             // 
-            // listBoxMesValue
-            // 
-            this.listBoxMesValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listBoxMesValue.FormattingEnabled = true;
-            this.listBoxMesValue.ItemHeight = 20;
-            this.listBoxMesValue.Location = new System.Drawing.Point(17, 58);
-            this.listBoxMesValue.Name = "listBoxMesValue";
-            this.listBoxMesValue.Size = new System.Drawing.Size(831, 484);
-            this.listBoxMesValue.TabIndex = 141;
-            // 
             // btn_BDE
             // 
             this.btn_BDE.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -260,19 +279,6 @@
             this.toolTip2.SetToolTip(this.btn_BDE, "LiveData");
             this.btn_BDE.UseVisualStyleBackColor = true;
             this.btn_BDE.Click += new System.EventHandler(this.btn_BDE_Click);
-            // 
-            // btn_Edit_Tolerance
-            // 
-            this.btn_Edit_Tolerance.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.btn_Edit_Tolerance.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_Edit_Tolerance.Location = new System.Drawing.Point(301, 567);
-            this.btn_Edit_Tolerance.Name = "btn_Edit_Tolerance";
-            this.btn_Edit_Tolerance.Size = new System.Drawing.Size(112, 27);
-            this.btn_Edit_Tolerance.TabIndex = 3;
-            this.btn_Edit_Tolerance.Text = "Ändern";
-            this.toolTip3.SetToolTip(this.btn_Edit_Tolerance, "System starten");
-            this.btn_Edit_Tolerance.UseVisualStyleBackColor = false;
-            this.btn_Edit_Tolerance.Click += new System.EventHandler(this.btn_Edit_Tolerance_Click);
             // 
             // btn_Error
             // 
@@ -321,6 +327,45 @@
             this.toolTip7.SetToolTip(this.btn_InspectionPlanEdit, "Edit Inspectionplan");
             this.btn_InspectionPlanEdit.Click += new System.EventHandler(this.btn_InspectionPlanEdit_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.fileToolStripMenuItem,
+            this.systemToolStripMenuItem,
+            this.helpToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1274, 24);
+            this.menuStrip1.TabIndex = 6;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // fileToolStripMenuItem
+            // 
+            this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
+            this.fileToolStripMenuItem.Text = "File";
+            // 
+            // systemToolStripMenuItem
+            // 
+            this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
+            this.systemToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.systemToolStripMenuItem.Text = "System";
+            // 
+            // helpToolStripMenuItem
+            // 
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.Menue_Help_Information});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
+            // 
+            // Menue_Help_Information
+            // 
+            this.Menue_Help_Information.Name = "Menue_Help_Information";
+            this.Menue_Help_Information.Size = new System.Drawing.Size(180, 22);
+            this.Menue_Help_Information.Text = "Information";
+            this.Menue_Help_Information.Click += new System.EventHandler(this.Menue_Help_Information_Click);
+            // 
             // Form_01_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -329,7 +374,9 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.tabControl);
             this.Controls.Add(this.statusStrip1);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.groupBox2);
+            this.MainMenuStrip = this.menuStrip1;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form_01_Main";
             this.Text = "Form1";
@@ -342,6 +389,8 @@
             this.tabControl.ResumeLayout(false);
             this.tpPicture.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,6 +429,11 @@
         private System.Windows.Forms.ToolTip toolTip6;
         private System.Windows.Forms.Button btn_InspectionPlanEdit;
         private System.Windows.Forms.ToolTip toolTip7;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem systemToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Menue_Help_Information;
     }
 }
 

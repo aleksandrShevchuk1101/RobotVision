@@ -1,0 +1,14 @@
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe.config
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.exe
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\bin\Debug\WindowsFormsApp1.pdb
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.AssemblyReference.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.SuggestedBindingRedirects.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.exe
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\WindowsFormsApp1.pdb
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_01_Main.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_91_Info.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_80_Password.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_95_DIDO_32.resources

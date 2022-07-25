@@ -16,5 +16,10 @@ namespace CS_KEHRATEC
         {
             InitializeComponent();
         }
+
+        private void cmd_Exit_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

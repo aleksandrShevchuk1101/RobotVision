@@ -694,6 +694,16 @@ namespace CS_KEHRATEC
 
         }
 
+        private void Menue_Help_Information_Click(object sender, EventArgs e)
+        {
+            Form_91_Info form_Info = new Form_91_Info();
+            form_Info.ShowDialog();
+        }
+
+        private void Start()
+        {
+
+        }
 
     }
 

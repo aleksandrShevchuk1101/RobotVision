@@ -27,3 +27,5 @@ F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csp
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.csproj.CoreCompileInputs.cache
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.exe
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\WindowsFormsApp2.pdb
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\CS_KEHRATEC.Form_80_Password.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp2\obj\Debug\CS_KEHRATEC.Form_91_Info.resources
