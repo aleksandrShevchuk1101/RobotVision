@@ -62,8 +62,23 @@ namespace CS_KEHRATEC
 
         private void Menue_Configuration_Digital_IO_Click(object sender, EventArgs e)
         {
-            Form_95_DIDO_32 form_DIDO = new Form_95_DIDO_32();
+            Form_95_DIDO_32 form_DIDO = new Form_95_DIDO_32("");
             form_DIDO.ShowDialog();
+        }
+
+        private void btn_ScreenSaver_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_Softkeyboard_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_BDE_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

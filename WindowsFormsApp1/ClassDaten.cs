@@ -80,6 +80,9 @@ namespace CS_KEHRATEC
     public class ClassDaten
     {
 
+        public static string sHELP_PATH = "..\\..\\..\\..\\..\\..\\VisionControl\\Help\\";
+
+
         public static SystemData structSystemData= new SystemData();
 
 

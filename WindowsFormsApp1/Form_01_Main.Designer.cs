@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_01_Main));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -36,6 +37,7 @@
             this.cameraActivationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.authorizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menue_Configuration_Digital_IO = new System.Windows.Forms.ToolStripMenuItem();
             this.modbusTCPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tCPIPSocketToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sickPLRToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -48,10 +50,29 @@
             this.userManualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analogueInputToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.btn_Softkeyboard = new System.Windows.Forms.Button();
+            this.lbl_Camera = new System.Windows.Forms.Label();
+            this.numUpDown_CamNr = new System.Windows.Forms.NumericUpDown();
+            this.btn_ScreenSaver = new System.Windows.Forms.Button();
+            this.btn_PrintImage = new System.Windows.Forms.Button();
+            this.btn_InspectionPlanLoad = new System.Windows.Forms.Button();
+            this.btn_InspectionPlanEdit = new System.Windows.Forms.Button();
             this.btn_Password = new System.Windows.Forms.Button();
-            this.Menue_Configuration_Digital_IO = new System.Windows.Forms.ToolStripMenuItem();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
+            this.button8 = new System.Windows.Forms.Button();
+            this.button9 = new System.Windows.Forms.Button();
+            this.button10 = new System.Windows.Forms.Button();
+            this.button11 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDown_CamNr)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -104,13 +125,13 @@
             // cameraActivationToolStripMenuItem
             // 
             this.cameraActivationToolStripMenuItem.Name = "cameraActivationToolStripMenuItem";
-            this.cameraActivationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cameraActivationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.cameraActivationToolStripMenuItem.Text = "Camera Activation";
             // 
             // authorizationToolStripMenuItem
             // 
             this.authorizationToolStripMenuItem.Name = "authorizationToolStripMenuItem";
-            this.authorizationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.authorizationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.authorizationToolStripMenuItem.Text = "Authorization";
             // 
             // configurationToolStripMenuItem
@@ -125,55 +146,62 @@
             this.cameracalibrationToolStripMenuItem,
             this.propertiesToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.configurationToolStripMenuItem.Text = "Configuration";
+            // 
+            // Menue_Configuration_Digital_IO
+            // 
+            this.Menue_Configuration_Digital_IO.Name = "Menue_Configuration_Digital_IO";
+            this.Menue_Configuration_Digital_IO.Size = new System.Drawing.Size(182, 22);
+            this.Menue_Configuration_Digital_IO.Text = "Digital Input/Output";
+            this.Menue_Configuration_Digital_IO.Click += new System.EventHandler(this.Menue_Configuration_Digital_IO_Click);
             // 
             // modbusTCPToolStripMenuItem
             // 
             this.modbusTCPToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.Modbus;
             this.modbusTCPToolStripMenuItem.Name = "modbusTCPToolStripMenuItem";
-            this.modbusTCPToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.modbusTCPToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.modbusTCPToolStripMenuItem.Text = "ModbusTCP";
             // 
             // tCPIPSocketToolStripMenuItem
             // 
             this.tCPIPSocketToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.TCP_IP;
             this.tCPIPSocketToolStripMenuItem.Name = "tCPIPSocketToolStripMenuItem";
-            this.tCPIPSocketToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.tCPIPSocketToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.tCPIPSocketToolStripMenuItem.Text = "TCP_IP_Socket";
             // 
             // sickPLRToolStripMenuItem
             // 
             this.sickPLRToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.Sick_PLR;
             this.sickPLRToolStripMenuItem.Name = "sickPLRToolStripMenuItem";
-            this.sickPLRToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.sickPLRToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.sickPLRToolStripMenuItem.Text = "Sick PLR";
             // 
             // pLCSocketToolStripMenuItem
             // 
             this.pLCSocketToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.TCP_IP;
             this.pLCSocketToolStripMenuItem.Name = "pLCSocketToolStripMenuItem";
-            this.pLCSocketToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.pLCSocketToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.pLCSocketToolStripMenuItem.Text = "PLC Socket";
             // 
             // softPLCToolStripMenuItem
             // 
             this.softPLCToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.SoftPLC;
             this.softPLCToolStripMenuItem.Name = "softPLCToolStripMenuItem";
-            this.softPLCToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.softPLCToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.softPLCToolStripMenuItem.Text = "Soft PLC";
             // 
             // cameracalibrationToolStripMenuItem
             // 
             this.cameracalibrationToolStripMenuItem.Image = global::WindowsFormsApp1.Properties.Resources.CamCalib;
             this.cameracalibrationToolStripMenuItem.Name = "cameracalibrationToolStripMenuItem";
-            this.cameracalibrationToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.cameracalibrationToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.cameracalibrationToolStripMenuItem.Text = "Cameracalibration";
             // 
             // propertiesToolStripMenuItem
             // 
             this.propertiesToolStripMenuItem.Name = "propertiesToolStripMenuItem";
-            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(186, 26);
+            this.propertiesToolStripMenuItem.Size = new System.Drawing.Size(182, 22);
             this.propertiesToolStripMenuItem.Text = "Properties";
             // 
             // helpToolStripMenuItem
@@ -208,6 +236,25 @@
             // groupBox2
             // 
             this.groupBox2.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.groupBox2.Controls.Add(this.button3);
+            this.groupBox2.Controls.Add(this.button2);
+            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.button12);
+            this.groupBox2.Controls.Add(this.button11);
+            this.groupBox2.Controls.Add(this.button10);
+            this.groupBox2.Controls.Add(this.button9);
+            this.groupBox2.Controls.Add(this.button8);
+            this.groupBox2.Controls.Add(this.button7);
+            this.groupBox2.Controls.Add(this.button6);
+            this.groupBox2.Controls.Add(this.button5);
+            this.groupBox2.Controls.Add(this.button4);
+            this.groupBox2.Controls.Add(this.btn_Softkeyboard);
+            this.groupBox2.Controls.Add(this.lbl_Camera);
+            this.groupBox2.Controls.Add(this.numUpDown_CamNr);
+            this.groupBox2.Controls.Add(this.btn_ScreenSaver);
+            this.groupBox2.Controls.Add(this.btn_PrintImage);
+            this.groupBox2.Controls.Add(this.btn_InspectionPlanLoad);
+            this.groupBox2.Controls.Add(this.btn_InspectionPlanEdit);
             this.groupBox2.Controls.Add(this.btn_Password);
             this.groupBox2.Location = new System.Drawing.Point(0, 27);
             this.groupBox2.Name = "groupBox2";
@@ -215,9 +262,136 @@
             this.groupBox2.TabIndex = 15;
             this.groupBox2.TabStop = false;
             // 
+            // button3
+            // 
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(592, 12);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(48, 48);
+            this.button3.TabIndex = 35;
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Image = ((System.Drawing.Image)(resources.GetObject("button2.Image")));
+            this.button2.Location = new System.Drawing.Point(646, 11);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(48, 48);
+            this.button2.TabIndex = 35;
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(700, 11);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(48, 48);
+            this.button1.TabIndex = 35;
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.Location = new System.Drawing.Point(440, 11);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(48, 48);
+            this.button4.TabIndex = 50;
+            this.button4.Tag = "1";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // btn_Softkeyboard
+            // 
+            this.btn_Softkeyboard.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_Softkeyboard.Image = ((System.Drawing.Image)(resources.GetObject("btn_Softkeyboard.Image")));
+            this.btn_Softkeyboard.Location = new System.Drawing.Point(520, 13);
+            this.btn_Softkeyboard.Name = "btn_Softkeyboard";
+            this.btn_Softkeyboard.Size = new System.Drawing.Size(48, 48);
+            this.btn_Softkeyboard.TabIndex = 50;
+            this.btn_Softkeyboard.Tag = "1";
+            this.btn_Softkeyboard.UseVisualStyleBackColor = true;
+            this.btn_Softkeyboard.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // lbl_Camera
+            // 
+            this.lbl_Camera.BackColor = System.Drawing.SystemColors.Control;
+            this.lbl_Camera.Image = ((System.Drawing.Image)(resources.GetObject("lbl_Camera.Image")));
+            this.lbl_Camera.Location = new System.Drawing.Point(788, 14);
+            this.lbl_Camera.Name = "lbl_Camera";
+            this.lbl_Camera.Size = new System.Drawing.Size(41, 43);
+            this.lbl_Camera.TabIndex = 54;
+            // 
+            // numUpDown_CamNr
+            // 
+            this.numUpDown_CamNr.Font = new System.Drawing.Font("Microsoft Sans Serif", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.numUpDown_CamNr.Location = new System.Drawing.Point(831, 14);
+            this.numUpDown_CamNr.Maximum = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numUpDown_CamNr.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.numUpDown_CamNr.Name = "numUpDown_CamNr";
+            this.numUpDown_CamNr.Size = new System.Drawing.Size(47, 44);
+            this.numUpDown_CamNr.TabIndex = 53;
+            this.numUpDown_CamNr.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // btn_ScreenSaver
+            // 
+            this.btn_ScreenSaver.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.btn_ScreenSaver.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ScreenSaver.Image = ((System.Drawing.Image)(resources.GetObject("btn_ScreenSaver.Image")));
+            this.btn_ScreenSaver.Location = new System.Drawing.Point(932, 11);
+            this.btn_ScreenSaver.Name = "btn_ScreenSaver";
+            this.btn_ScreenSaver.Size = new System.Drawing.Size(48, 48);
+            this.btn_ScreenSaver.TabIndex = 55;
+            this.btn_ScreenSaver.Tag = "1";
+            this.btn_ScreenSaver.UseVisualStyleBackColor = false;
+            this.btn_ScreenSaver.Click += new System.EventHandler(this.btn_ScreenSaver_Click);
+            // 
+            // btn_PrintImage
+            // 
+            this.btn_PrintImage.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_PrintImage.Image = ((System.Drawing.Image)(resources.GetObject("btn_PrintImage.Image")));
+            this.btn_PrintImage.Location = new System.Drawing.Point(1014, 11);
+            this.btn_PrintImage.Name = "btn_PrintImage";
+            this.btn_PrintImage.Size = new System.Drawing.Size(48, 48);
+            this.btn_PrintImage.TabIndex = 37;
+            this.btn_PrintImage.UseVisualStyleBackColor = true;
+            // 
+            // btn_InspectionPlanLoad
+            // 
+            this.btn_InspectionPlanLoad.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_InspectionPlanLoad.Image = ((System.Drawing.Image)(resources.GetObject("btn_InspectionPlanLoad.Image")));
+            this.btn_InspectionPlanLoad.Location = new System.Drawing.Point(1097, 11);
+            this.btn_InspectionPlanLoad.Name = "btn_InspectionPlanLoad";
+            this.btn_InspectionPlanLoad.Size = new System.Drawing.Size(48, 48);
+            this.btn_InspectionPlanLoad.TabIndex = 37;
+            this.btn_InspectionPlanLoad.UseVisualStyleBackColor = true;
+            // 
+            // btn_InspectionPlanEdit
+            // 
+            this.btn_InspectionPlanEdit.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_InspectionPlanEdit.Image = ((System.Drawing.Image)(resources.GetObject("btn_InspectionPlanEdit.Image")));
+            this.btn_InspectionPlanEdit.Location = new System.Drawing.Point(1151, 10);
+            this.btn_InspectionPlanEdit.Name = "btn_InspectionPlanEdit";
+            this.btn_InspectionPlanEdit.Size = new System.Drawing.Size(57, 48);
+            this.btn_InspectionPlanEdit.TabIndex = 37;
+            this.btn_InspectionPlanEdit.UseVisualStyleBackColor = true;
+            // 
             // btn_Password
             // 
             this.btn_Password.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btn_Password.Image = ((System.Drawing.Image)(resources.GetObject("btn_Password.Image")));
             this.btn_Password.Location = new System.Drawing.Point(1214, 10);
             this.btn_Password.Name = "btn_Password";
             this.btn_Password.Size = new System.Drawing.Size(48, 48);
@@ -225,12 +399,101 @@
             this.btn_Password.UseVisualStyleBackColor = true;
             this.btn_Password.Click += new System.EventHandler(this.btn_Password_Click);
             // 
-            // Menue_Configuration_Digital_IO
+            // button5
             // 
-            this.Menue_Configuration_Digital_IO.Name = "Menue_Configuration_Digital_IO";
-            this.Menue_Configuration_Digital_IO.Size = new System.Drawing.Size(186, 26);
-            this.Menue_Configuration_Digital_IO.Text = "Digital Input/Output";
-            this.Menue_Configuration_Digital_IO.Click += new System.EventHandler(this.Menue_Configuration_Digital_IO_Click);
+            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
+            this.button5.Location = new System.Drawing.Point(385, 11);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(48, 48);
+            this.button5.TabIndex = 50;
+            this.button5.Tag = "1";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button6
+            // 
+            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
+            this.button6.Location = new System.Drawing.Point(331, 12);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(48, 48);
+            this.button6.TabIndex = 50;
+            this.button6.Tag = "1";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button7
+            // 
+            this.button7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button7.Image = ((System.Drawing.Image)(resources.GetObject("button7.Image")));
+            this.button7.Location = new System.Drawing.Point(277, 9);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(48, 48);
+            this.button7.TabIndex = 50;
+            this.button7.Tag = "1";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button8
+            // 
+            this.button8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button8.Image = ((System.Drawing.Image)(resources.GetObject("button8.Image")));
+            this.button8.Location = new System.Drawing.Point(223, 10);
+            this.button8.Name = "button8";
+            this.button8.Size = new System.Drawing.Size(48, 48);
+            this.button8.TabIndex = 50;
+            this.button8.Tag = "1";
+            this.button8.UseVisualStyleBackColor = true;
+            this.button8.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button9
+            // 
+            this.button9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button9.Image = ((System.Drawing.Image)(resources.GetObject("button9.Image")));
+            this.button9.Location = new System.Drawing.Point(169, 10);
+            this.button9.Name = "button9";
+            this.button9.Size = new System.Drawing.Size(48, 48);
+            this.button9.TabIndex = 50;
+            this.button9.Tag = "1";
+            this.button9.UseVisualStyleBackColor = true;
+            this.button9.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button10
+            // 
+            this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button10.Image = ((System.Drawing.Image)(resources.GetObject("button10.Image")));
+            this.button10.Location = new System.Drawing.Point(114, 10);
+            this.button10.Name = "button10";
+            this.button10.Size = new System.Drawing.Size(48, 48);
+            this.button10.TabIndex = 50;
+            this.button10.Tag = "1";
+            this.button10.UseVisualStyleBackColor = true;
+            this.button10.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button11
+            // 
+            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button11.Image = ((System.Drawing.Image)(resources.GetObject("button11.Image")));
+            this.button11.Location = new System.Drawing.Point(60, 10);
+            this.button11.Name = "button11";
+            this.button11.Size = new System.Drawing.Size(48, 48);
+            this.button11.TabIndex = 50;
+            this.button11.Tag = "1";
+            this.button11.UseVisualStyleBackColor = true;
+            this.button11.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            // 
+            // button12
+            // 
+            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button12.Image = ((System.Drawing.Image)(resources.GetObject("button12.Image")));
+            this.button12.Location = new System.Drawing.Point(6, 10);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(48, 48);
+            this.button12.TabIndex = 50;
+            this.button12.Tag = "1";
+            this.button12.UseVisualStyleBackColor = true;
+            this.button12.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // Form_01_Main
             // 
@@ -249,6 +512,7 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.numUpDown_CamNr)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -278,6 +542,25 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Button btn_Password;
         private System.Windows.Forms.ToolStripMenuItem Menue_Configuration_Digital_IO;
+        private System.Windows.Forms.Button btn_InspectionPlanEdit;
+        private System.Windows.Forms.Button btn_InspectionPlanLoad;
+        private System.Windows.Forms.Button btn_PrintImage;
+        private System.Windows.Forms.Button btn_ScreenSaver;
+        private System.Windows.Forms.NumericUpDown numUpDown_CamNr;
+        private System.Windows.Forms.Label lbl_Camera;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btn_Softkeyboard;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button button11;
     }
 }
 
