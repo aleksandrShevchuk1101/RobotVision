@@ -41,7 +41,7 @@
             this.btn_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btn_OK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_OK.Image = ((System.Drawing.Image)(resources.GetObject("btn_OK.Image")));
-            this.btn_OK.Location = new System.Drawing.Point(12, 13);
+            this.btn_OK.Location = new System.Drawing.Point(12, 12);
             this.btn_OK.Name = "btn_OK";
             this.btn_OK.Size = new System.Drawing.Size(56, 48);
             this.btn_OK.TabIndex = 1;

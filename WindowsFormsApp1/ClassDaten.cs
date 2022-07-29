@@ -74,6 +74,18 @@ namespace CS_KEHRATEC
     }
     }
 
+    public struct Password
+    {
+        public string sAdvisorPassword1;
+        public string sAdvisorPassword2;
+        public string sAdvisorPassword3;
+        public string sSupervisorPassword;
+        public bool bAdvisorPassword1_OK;
+        public bool bAdvisorPassword2_OK;
+        public bool bAdvisorPassword3_OK;
+        public bool bSupervisorPassword_OK;
+        public string sActUserName;
+    }
 
 
 
@@ -85,6 +97,10 @@ namespace CS_KEHRATEC
 
         public static SystemData structSystemData= new SystemData();
 
+       
+        public static Password structPassword = new Password();
+
+        public const int MAX_WORKER = 12;
 
 
 

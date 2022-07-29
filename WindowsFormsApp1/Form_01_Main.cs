@@ -43,7 +43,7 @@ namespace CS_KEHRATEC
             form_Info.ShowDialog();
         }
 
-        private void btn_Password_Click(object sender, EventArgs e)
+        private void btn_Password_Click1(object sender, EventArgs e)
         {
             Form_80_Password formPassword = new Form_80_Password();
             formPassword.ShowDialog();
