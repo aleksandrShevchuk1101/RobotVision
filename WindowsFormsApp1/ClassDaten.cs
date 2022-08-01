@@ -73,6 +73,22 @@ namespace CS_KEHRATEC
 
     }
     }
+    public struct Autorisation
+    {
+        public string sName;
+        public string sPassword;
+        public bool bLoadProgrsms;
+        public bool bEditPrograms;
+
+
+        public void Init()
+        {
+            sName = "";
+            sPassword = "";
+            bLoadProgrsms = false;
+            bEditPrograms = false;
+        }
+    }
 
     public struct Password
     {
@@ -88,19 +104,21 @@ namespace CS_KEHRATEC
     }
 
 
-
     public class ClassDaten
     {
 
         public static string sHELP_PATH = "..\\..\\..\\..\\..\\..\\VisionControl\\Help\\";
-
+        public static string sDATA_PATH = "..\\..\\..\\VisionControl\\Data\\";
+        public const int MAX_WORKER = 12;
 
         public static SystemData structSystemData= new SystemData();
 
        
         public static Password structPassword = new Password();
+        public static Autorisation[] structAutorisation = new Autorisation[MAX_WORKER];
 
-        public const int MAX_WORKER = 12;
+        public enum PasswordType { Advisor1,Advisor2,Advisor3, Supervisor };
+       
 
 
 

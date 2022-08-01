@@ -35,7 +35,7 @@
             this.shutDownToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.systemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.cameraActivationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.authorizationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Menue_System_Autorisation = new System.Windows.Forms.ToolStripMenuItem();
             this.configurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Menue_Configuration_Digital_IO = new System.Windows.Forms.ToolStripMenuItem();
             this.modbusTCPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,9 +70,15 @@
             this.btn_InspectionPlanLoad = new System.Windows.Forms.Button();
             this.btn_InspectionPlanEdit = new System.Windows.Forms.Button();
             this.btn_Password = new System.Windows.Forms.Button();
+            this.gb_Buttons = new System.Windows.Forms.GroupBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lbl_UserLevel = new System.Windows.Forms.Label();
+            this.label80 = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown_CamNr)).BeginInit();
+            this.gb_Buttons.SuspendLayout();
+            this.groupBox3.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -116,23 +122,24 @@
             // 
             this.systemToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cameraActivationToolStripMenuItem,
-            this.authorizationToolStripMenuItem,
+            this.Menue_System_Autorisation,
             this.configurationToolStripMenuItem});
             this.systemToolStripMenuItem.Name = "systemToolStripMenuItem";
-            this.systemToolStripMenuItem.Size = new System.Drawing.Size(22, 20);
-            this.systemToolStripMenuItem.Text = " ";
+            this.systemToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.systemToolStripMenuItem.Text = "System";
             // 
             // cameraActivationToolStripMenuItem
             // 
             this.cameraActivationToolStripMenuItem.Name = "cameraActivationToolStripMenuItem";
-            this.cameraActivationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.cameraActivationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.cameraActivationToolStripMenuItem.Text = "Camera Activation";
             // 
-            // authorizationToolStripMenuItem
+            // Menue_System_Autorisation
             // 
-            this.authorizationToolStripMenuItem.Name = "authorizationToolStripMenuItem";
-            this.authorizationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
-            this.authorizationToolStripMenuItem.Text = "Authorization";
+            this.Menue_System_Autorisation.Name = "Menue_System_Autorisation";
+            this.Menue_System_Autorisation.Size = new System.Drawing.Size(180, 22);
+            this.Menue_System_Autorisation.Text = "Authorization";
+            this.Menue_System_Autorisation.Click += new System.EventHandler(this.Menue_System_Autorisation_Click);
             // 
             // configurationToolStripMenuItem
             // 
@@ -146,7 +153,7 @@
             this.cameracalibrationToolStripMenuItem,
             this.propertiesToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configurationToolStripMenuItem.Text = "Configuration";
             // 
             // Menue_Configuration_Digital_IO
@@ -495,12 +502,53 @@
             this.btn_Password.UseVisualStyleBackColor = true;
             this.btn_Password.Click += new System.EventHandler(this.btn_Password_Click1);
             // 
+            // gb_Buttons
+            // 
+            this.gb_Buttons.Controls.Add(this.groupBox3);
+            this.gb_Buttons.Location = new System.Drawing.Point(900, 98);
+            this.gb_Buttons.Name = "gb_Buttons";
+            this.gb_Buttons.Size = new System.Drawing.Size(358, 831);
+            this.gb_Buttons.TabIndex = 17;
+            this.gb_Buttons.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label80);
+            this.groupBox3.Controls.Add(this.lbl_UserLevel);
+            this.groupBox3.Location = new System.Drawing.Point(12, 481);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(338, 50);
+            this.groupBox3.TabIndex = 0;
+            this.groupBox3.TabStop = false;
+            // 
+            // lbl_UserLevel
+            // 
+            this.lbl_UserLevel.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.lbl_UserLevel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.lbl_UserLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lbl_UserLevel.Location = new System.Drawing.Point(90, 15);
+            this.lbl_UserLevel.Name = "lbl_UserLevel";
+            this.lbl_UserLevel.Size = new System.Drawing.Size(234, 27);
+            this.lbl_UserLevel.TabIndex = 19;
+            this.lbl_UserLevel.Text = "Userlevel";
+            // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label80.Location = new System.Drawing.Point(9, 16);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(53, 24);
+            this.label80.TabIndex = 20;
+            this.label80.Text = "User";
+            // 
             // Form_01_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 841);
             this.ControlBox = false;
+            this.Controls.Add(this.gb_Buttons);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
@@ -513,6 +561,9 @@
             this.menuStrip.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown_CamNr)).EndInit();
+            this.gb_Buttons.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -527,7 +578,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shutDownToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem cameraActivationToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem authorizationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem Menue_System_Autorisation;
         private System.Windows.Forms.ToolStripMenuItem configurationToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem Menue_Help_Information;
         private System.Windows.Forms.ToolStripMenuItem userManualToolStripMenuItem;
@@ -561,6 +612,10 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button12;
         private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.GroupBox gb_Buttons;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.Label lbl_UserLevel;
+        private System.Windows.Forms.Label label80;
     }
 }
 

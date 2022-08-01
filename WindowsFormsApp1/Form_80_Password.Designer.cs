@@ -41,7 +41,7 @@
             this.btn_OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btn_OK.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btn_OK.Image = ((System.Drawing.Image)(resources.GetObject("btn_OK.Image")));
-            this.btn_OK.Location = new System.Drawing.Point(12, 12);
+            this.btn_OK.Location = new System.Drawing.Point(12, 13);
             this.btn_OK.Name = "btn_OK";
             this.btn_OK.Size = new System.Drawing.Size(56, 48);
             this.btn_OK.TabIndex = 1;
@@ -60,7 +60,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.tb_Password);
-            this.groupBox1.Location = new System.Drawing.Point(12, 86);
+            this.groupBox1.Location = new System.Drawing.Point(12, 79);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(317, 68);
             this.groupBox1.TabIndex = 3;
@@ -79,7 +79,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(341, 166);
+            this.ClientSize = new System.Drawing.Size(337, 162);
             this.ControlBox = false;
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btn_OK);
@@ -88,6 +88,7 @@
             this.Name = "Form_80_Password";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Input Password";
+            this.Shown += new System.EventHandler(this.OnShown);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

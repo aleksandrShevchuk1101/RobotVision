@@ -12,3 +12,4 @@ F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_01_
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_91_Info.resources
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_80_Password.resources
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_95_DIDO_32.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_82_Autorisation.resources
