@@ -53,7 +53,7 @@
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button12 = new System.Windows.Forms.Button();
+            this.btn_SavePictures = new System.Windows.Forms.Button();
             this.button11 = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
@@ -72,8 +72,8 @@
             this.btn_Password = new System.Windows.Forms.Button();
             this.gb_Buttons = new System.Windows.Forms.GroupBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.lbl_UserLevel = new System.Windows.Forms.Label();
             this.label80 = new System.Windows.Forms.Label();
+            this.lbl_UserLevel = new System.Windows.Forms.Label();
             this.menuStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown_CamNr)).BeginInit();
@@ -131,13 +131,13 @@
             // cameraActivationToolStripMenuItem
             // 
             this.cameraActivationToolStripMenuItem.Name = "cameraActivationToolStripMenuItem";
-            this.cameraActivationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.cameraActivationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.cameraActivationToolStripMenuItem.Text = "Camera Activation";
             // 
             // Menue_System_Autorisation
             // 
             this.Menue_System_Autorisation.Name = "Menue_System_Autorisation";
-            this.Menue_System_Autorisation.Size = new System.Drawing.Size(180, 22);
+            this.Menue_System_Autorisation.Size = new System.Drawing.Size(172, 22);
             this.Menue_System_Autorisation.Text = "Authorization";
             this.Menue_System_Autorisation.Click += new System.EventHandler(this.Menue_System_Autorisation_Click);
             // 
@@ -153,7 +153,7 @@
             this.cameracalibrationToolStripMenuItem,
             this.propertiesToolStripMenuItem});
             this.configurationToolStripMenuItem.Name = "configurationToolStripMenuItem";
-            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configurationToolStripMenuItem.Size = new System.Drawing.Size(172, 22);
             this.configurationToolStripMenuItem.Text = "Configuration";
             // 
             // Menue_Configuration_Digital_IO
@@ -246,7 +246,7 @@
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.button1);
-            this.groupBox2.Controls.Add(this.button12);
+            this.groupBox2.Controls.Add(this.btn_SavePictures);
             this.groupBox2.Controls.Add(this.button11);
             this.groupBox2.Controls.Add(this.button10);
             this.groupBox2.Controls.Add(this.button9);
@@ -296,20 +296,22 @@
             this.button1.TabIndex = 35;
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // button12
+            // btn_SavePictures
             // 
-            this.button12.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button12.Image = ((System.Drawing.Image)(resources.GetObject("button12.Image")));
-            this.button12.Location = new System.Drawing.Point(6, 10);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(48, 48);
-            this.button12.TabIndex = 50;
-            this.button12.Tag = "1";
-            this.button12.UseVisualStyleBackColor = true;
-            this.button12.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            this.btn_SavePictures.BackColor = System.Drawing.Color.LightGray;
+            this.btn_SavePictures.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_SavePictures.Image = ((System.Drawing.Image)(resources.GetObject("btn_SavePictures.Image")));
+            this.btn_SavePictures.Location = new System.Drawing.Point(6, 10);
+            this.btn_SavePictures.Name = "btn_SavePictures";
+            this.btn_SavePictures.Size = new System.Drawing.Size(48, 48);
+            this.btn_SavePictures.TabIndex = 50;
+            this.btn_SavePictures.Tag = "1";
+            this.btn_SavePictures.UseVisualStyleBackColor = false;
+            this.btn_SavePictures.Click += new System.EventHandler(this.btn_SavePictures_Click);
             // 
             // button11
             // 
+            this.button11.BackColor = System.Drawing.Color.LightGray;
             this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button11.Image = ((System.Drawing.Image)(resources.GetObject("button11.Image")));
             this.button11.Location = new System.Drawing.Point(60, 10);
@@ -317,11 +319,11 @@
             this.button11.Size = new System.Drawing.Size(48, 48);
             this.button11.TabIndex = 50;
             this.button11.Tag = "1";
-            this.button11.UseVisualStyleBackColor = true;
-            this.button11.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            this.button11.UseVisualStyleBackColor = false;
             // 
             // button10
             // 
+            this.button10.BackColor = System.Drawing.Color.LightGray;
             this.button10.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.button10.Image = ((System.Drawing.Image)(resources.GetObject("button10.Image")));
             this.button10.Location = new System.Drawing.Point(114, 10);
@@ -329,8 +331,7 @@
             this.button10.Size = new System.Drawing.Size(48, 48);
             this.button10.TabIndex = 50;
             this.button10.Tag = "1";
-            this.button10.UseVisualStyleBackColor = true;
-            this.button10.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
+            this.button10.UseVisualStyleBackColor = false;
             // 
             // button9
             // 
@@ -342,7 +343,6 @@
             this.button9.TabIndex = 50;
             this.button9.Tag = "1";
             this.button9.UseVisualStyleBackColor = true;
-            this.button9.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // button8
             // 
@@ -354,7 +354,6 @@
             this.button8.TabIndex = 50;
             this.button8.Tag = "1";
             this.button8.UseVisualStyleBackColor = true;
-            this.button8.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // button7
             // 
@@ -366,7 +365,6 @@
             this.button7.TabIndex = 50;
             this.button7.Tag = "1";
             this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // button6
             // 
@@ -378,7 +376,6 @@
             this.button6.TabIndex = 50;
             this.button6.Tag = "1";
             this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // button5
             // 
@@ -390,7 +387,6 @@
             this.button5.TabIndex = 50;
             this.button5.Tag = "1";
             this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // button4
             // 
@@ -402,7 +398,6 @@
             this.button4.TabIndex = 50;
             this.button4.Tag = "1";
             this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // btn_Softkeyboard
             // 
@@ -414,7 +409,6 @@
             this.btn_Softkeyboard.TabIndex = 50;
             this.btn_Softkeyboard.Tag = "1";
             this.btn_Softkeyboard.UseVisualStyleBackColor = true;
-            this.btn_Softkeyboard.Click += new System.EventHandler(this.btn_Softkeyboard_Click);
             // 
             // lbl_Camera
             // 
@@ -521,6 +515,16 @@
             this.groupBox3.TabIndex = 0;
             this.groupBox3.TabStop = false;
             // 
+            // label80
+            // 
+            this.label80.AutoSize = true;
+            this.label80.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label80.Location = new System.Drawing.Point(9, 16);
+            this.label80.Name = "label80";
+            this.label80.Size = new System.Drawing.Size(53, 24);
+            this.label80.TabIndex = 20;
+            this.label80.Text = "User";
+            // 
             // lbl_UserLevel
             // 
             this.lbl_UserLevel.BackColor = System.Drawing.SystemColors.ControlLightLight;
@@ -531,16 +535,6 @@
             this.lbl_UserLevel.Size = new System.Drawing.Size(234, 27);
             this.lbl_UserLevel.TabIndex = 19;
             this.lbl_UserLevel.Text = "Userlevel";
-            // 
-            // label80
-            // 
-            this.label80.AutoSize = true;
-            this.label80.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label80.Location = new System.Drawing.Point(9, 16);
-            this.label80.Name = "label80";
-            this.label80.Size = new System.Drawing.Size(53, 24);
-            this.label80.TabIndex = 20;
-            this.label80.Text = "User";
             // 
             // Form_01_Main
             // 
@@ -610,7 +604,7 @@
         private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button btn_SavePictures;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.GroupBox gb_Buttons;
         private System.Windows.Forms.GroupBox groupBox3;

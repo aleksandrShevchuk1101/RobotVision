@@ -118,6 +118,10 @@ namespace CS_KEHRATEC
         public static Autorisation[] structAutorisation = new Autorisation[MAX_WORKER];
 
         public enum PasswordType { Advisor1,Advisor2,Advisor3, Supervisor };
+
+
+
+        public static string DEFAULT_PASSWORD = "*KEHRATEC*";
        
 
 

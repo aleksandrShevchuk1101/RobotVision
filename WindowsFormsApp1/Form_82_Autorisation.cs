@@ -27,6 +27,7 @@ namespace CS_KEHRATEC
         {
             InitializeComponent();
             GetAllPointer();
+            ReadCryptoData();
         }
 
         private void btn_Save_Click(object sender, EventArgs e)
@@ -138,6 +139,98 @@ namespace CS_KEHRATEC
         public void ReadCryptoData()
         {
             int iTextLenght = 0;
+            int iValue = 0;
+            byte[] byteArr = new byte[128];
+
+            if (File.Exists(sCRYPTO_KEY_FILENAME))
+            {
+                FileStream s = new FileStream(sCRYPTO_KEY_FILENAME, FileMode.Open, FileAccess.Read);
+                BinaryReader b = new BinaryReader(s);
+                des.Key = b.ReadBytes(8);
+                des.IV = b.ReadBytes(8);
+                b.Close();
+                s.Close();
+
+                ICryptoTransform desDecrypt=des.CreateDecryptor();
+                if (File.Exists(sCRYPTO_FILENAME))
+                {
+                    FileStream fs = new FileStream(sCRYPTO_KEY_FILENAME, FileMode.Open, FileAccess.Read);
+                    try
+                    {
+                        CryptoStream cryptoStrm = new CryptoStream(fs, desDecrypt, CryptoStreamMode.Read);
+
+
+                        for (int i = 0; i < ClassDaten.MAX_WORKER; i++)
+                        {
+                            iTextLenght = cryptoStrm.ReadByte();
+
+                            ClassDaten.structAutorisation[i].sName = "";
+                            for (int k = 0; k < iTextLenght; k++)
+                            {
+                                ClassDaten.structAutorisation[i].sName += (char)cryptoStrm.ReadByte();
+                            }
+                            tb_NamePtr[i].Text = ClassDaten.structAutorisation[i].sName;
+
+                            //Read password length
+                            iTextLenght= cryptoStrm.ReadByte();
+                            ClassDaten.structAutorisation[i].sPassword = "";
+
+                            for (int k = 0; k < iTextLenght; k++)
+                            {
+                                ClassDaten.structAutorisation[i].sPassword += (char)cryptoStrm.ReadByte();
+
+                            }
+                            tb_PasswordPtr[i].Text = ClassDaten.structAutorisation[i].sPassword;
+
+
+                            // Read Checkbox Load Programs
+                            iValue=cryptoStrm.ReadByte();
+
+                            if (iValue == 1)
+                                rb_LoadProgramsPtr[i].Checked = true;
+                            else
+                                rb_LoadProgramsPtr[i].Checked = false;
+
+                            ClassDaten.structAutorisation[i].bLoadProgrsms = rb_LoadProgramsPtr[i].Checked;
+
+
+
+
+
+
+
+                        }
+
+
+
+
+
+
+                    }
+                    catch (Exception)
+                    {
+
+                        throw;
+                    }
+
+
+
+                }
+
+
+
+
+
+
+            }
+            else
+            {
+                MessageBox.Show("File " + sCRYPTO_KEY_FILENAME + " not found", "Info",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+
+                ClassDaten.structPassword.sSupervisorPassword = ClassDaten.DEFAULT_PASSWORD;
+            }
+
 
         }
 

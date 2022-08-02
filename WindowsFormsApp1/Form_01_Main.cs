@@ -12,6 +12,13 @@ namespace CS_KEHRATEC
 {
     public partial class Form_01_Main : Form
     {
+
+        Form_06_SavePictureSelect formPictureSelect = new Form_06_SavePictureSelect();
+
+
+
+
+
         public Form_01_Main()
         {
             InitializeComponent();
@@ -71,10 +78,7 @@ namespace CS_KEHRATEC
 
         }
 
-        private void btn_Softkeyboard_Click(object sender, EventArgs e)
-        {
 
-        }
 
         private void btn_BDE_Click(object sender, EventArgs e)
         {
@@ -172,8 +176,27 @@ namespace CS_KEHRATEC
                 lbl_UserLevel.Text = ClassDaten.structSystemData.sUserLevel;
             }
         }
-    
 
-     }
+        private void btn_SavePictures_Click(object sender, EventArgs e)
+        {
+            ClassDaten.structSystemData.bWriteImageFlag = !ClassDaten.structSystemData.bWriteImageFlag;
+            if (ClassDaten.structSystemData.bWriteImageFlag)
+            {
+                DialogResult myResult = formPictureSelect.ShowDialog();
+                if (myResult==DialogResult.Cancel)
+                {
+                    ClassDaten.structSystemData.bWriteImageFlag = false;
+                    btn_SavePictures.BackColor = Color.LightGray;
+                }
+                else
+                    btn_SavePictures.BackColor = Color.Red;
+                
+            }
+            else
+                btn_SavePictures.BackColor = Color.LightGray;
+
+        }
+
+    }
 
 }
