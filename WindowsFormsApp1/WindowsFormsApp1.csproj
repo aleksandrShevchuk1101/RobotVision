@@ -66,6 +66,12 @@
     <Compile Include="Form_06_SavePictureSelect.Designer.cs">
       <DependentUpon>Form_06_SavePictureSelect.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_30_Messages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_30_Messages.Designer.cs">
+      <DependentUpon>Form_30_Messages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_80_Password.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -100,6 +106,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Form_06_SavePictureSelect.resx">
       <DependentUpon>Form_06_SavePictureSelect.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_30_Messages.resx">
+      <DependentUpon>Form_30_Messages.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_80_Password.resx">
       <DependentUpon>Form_80_Password.cs</DependentUpon>

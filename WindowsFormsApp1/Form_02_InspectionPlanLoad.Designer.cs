@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form_02_InspectionPlanLoad));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_InspectionPlanName = new System.Windows.Forms.ComboBox();
@@ -39,9 +40,11 @@
             this.btn_Help = new System.Windows.Forms.Button();
             this.btn_Close = new System.Windows.Forms.Button();
             this.btn_Load = new System.Windows.Forms.Button();
+            this.bindingSource1 = new System.Windows.Forms.BindingSource(this.components);
             this.groupBox1.SuspendLayout();
             this.gb_Picture.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -65,6 +68,7 @@
             this.cb_InspectionPlanName.Name = "cb_InspectionPlanName";
             this.cb_InspectionPlanName.Size = new System.Drawing.Size(497, 28);
             this.cb_InspectionPlanName.TabIndex = 1;
+            this.cb_InspectionPlanName.SelectedIndexChanged += new System.EventHandler(this.cb_InspectionPlanName_SelectedIndexChanged);
             // 
             // lbl_Comment
             // 
@@ -157,10 +161,12 @@
             this.Name = "Form_02_InspectionPlanLoad";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Load Inspection Plan";
+            this.Load += new System.EventHandler(this.On_InspectiionPlan_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.gb_Picture.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.bindingSource1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -177,5 +183,6 @@
         private System.Windows.Forms.Button btn_Help;
         private System.Windows.Forms.Button btn_Close;
         private System.Windows.Forms.Button btn_Load;
+        private System.Windows.Forms.BindingSource bindingSource1;
     }
 }

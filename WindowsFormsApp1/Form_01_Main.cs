@@ -16,7 +16,7 @@ namespace CS_KEHRATEC
         Form_06_SavePictureSelect formPictureSelect = new Form_06_SavePictureSelect();
 
 
-
+        Form_30_Messages formMessages = new Form_30_Messages();
 
 
         public Form_01_Main()
@@ -230,6 +230,20 @@ namespace CS_KEHRATEC
                     
 
            // }
+        }
+
+        private void btn_Error_Click(object sender, EventArgs e)
+        {
+            if (!formMessages.Created)
+            {
+                formMessages.Visible = true;
+                formMessages.Show();
+            }
+            else
+            {
+                formMessages.Visible = true;
+                formMessages.Activate();
+            }
         }
     }
 

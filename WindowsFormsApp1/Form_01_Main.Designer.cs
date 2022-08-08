@@ -52,7 +52,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.button3 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Error = new System.Windows.Forms.Button();
             this.btn_SavePictures = new System.Windows.Forms.Button();
             this.btn_LifePicture = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
@@ -253,7 +253,7 @@
             this.groupBox2.BackColor = System.Drawing.SystemColors.ActiveBorder;
             this.groupBox2.Controls.Add(this.button3);
             this.groupBox2.Controls.Add(this.button2);
-            this.groupBox2.Controls.Add(this.button1);
+            this.groupBox2.Controls.Add(this.btn_Error);
             this.groupBox2.Controls.Add(this.btn_SavePictures);
             this.groupBox2.Controls.Add(this.btn_LifePicture);
             this.groupBox2.Controls.Add(this.button10);
@@ -295,14 +295,15 @@
             this.button2.TabIndex = 35;
             this.button2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btn_Error
             // 
-            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
-            this.button1.Location = new System.Drawing.Point(700, 11);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(48, 48);
-            this.button1.TabIndex = 35;
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_Error.Image = ((System.Drawing.Image)(resources.GetObject("btn_Error.Image")));
+            this.btn_Error.Location = new System.Drawing.Point(700, 11);
+            this.btn_Error.Name = "btn_Error";
+            this.btn_Error.Size = new System.Drawing.Size(48, 48);
+            this.btn_Error.TabIndex = 35;
+            this.btn_Error.UseVisualStyleBackColor = true;
+            this.btn_Error.Click += new System.EventHandler(this.btn_Error_Click);
             // 
             // btn_SavePictures
             // 
@@ -672,7 +673,7 @@
         private System.Windows.Forms.Button btn_ScreenSaver;
         private System.Windows.Forms.NumericUpDown numUpDown_CamNr;
         private System.Windows.Forms.Label lbl_Camera;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_Error;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button btn_Softkeyboard;

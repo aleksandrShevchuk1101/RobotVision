@@ -171,8 +171,8 @@ namespace CS_KEHRATEC
     public class ClassDaten
     {
 
-        public static string sHELP_PATH = "..\\..\\..\\..\\..\\..\\VisionControl\\Help\\";
-        public static string sDATA_PATH = "..\\..\\..\\VisionControl\\Data\\";
+        public static string sHELP_PATH = "..\\..\\..\\..\\VisionControl\\Help\\";
+        public static string sDATA_PATH = "..\\..\\..\\..\\VisionControl\\Data\\";
         public const int MAX_WORKER = 12;
 
         public static SystemData structSystemData= new SystemData();
