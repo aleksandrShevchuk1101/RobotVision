@@ -14,3 +14,4 @@ F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_80_
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_95_DIDO_32.resources
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_82_Autorisation.resources
 F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_06_SavePictureSelect.resources
+F:\Proj\Robot Vision\RobotVision\WindowsFormsApp1\obj\Debug\CS_KEHRATEC.Form_02_InspectionPlanLoad.resources

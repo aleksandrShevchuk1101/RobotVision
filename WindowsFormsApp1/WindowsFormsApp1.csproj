@@ -54,6 +54,12 @@
     <Compile Include="Form_01_Main.Designer.cs">
       <DependentUpon>Form_01_Main.cs</DependentUpon>
     </Compile>
+    <Compile Include="Form_02_InspectionPlanLoad.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form_02_InspectionPlanLoad.Designer.cs">
+      <DependentUpon>Form_02_InspectionPlanLoad.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form_06_SavePictureSelect.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -88,6 +94,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form_01_Main.resx">
       <DependentUpon>Form_01_Main.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form_02_InspectionPlanLoad.resx">
+      <DependentUpon>Form_02_InspectionPlanLoad.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form_06_SavePictureSelect.resx">
       <DependentUpon>Form_06_SavePictureSelect.cs</DependentUpon>

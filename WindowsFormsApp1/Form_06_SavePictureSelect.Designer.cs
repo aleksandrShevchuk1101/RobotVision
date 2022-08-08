@@ -67,10 +67,12 @@
             this.radioButton1.Location = new System.Drawing.Point(24, 98);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(434, 24);
-            this.radioButton1.TabIndex = 0;
+            this.radioButton1.TabIndex = 2;
             this.radioButton1.TabStop = true;
+            this.radioButton1.Tag = "2";
             this.radioButton1.Text = "All Images";
             this.radioButton1.UseVisualStyleBackColor = true;
+            this.radioButton1.Click += new System.EventHandler(this.RadioButtonClick);
             // 
             // rb_OnlyNOK
             // 
@@ -80,10 +82,12 @@
             this.rb_OnlyNOK.Location = new System.Drawing.Point(24, 68);
             this.rb_OnlyNOK.Name = "rb_OnlyNOK";
             this.rb_OnlyNOK.Size = new System.Drawing.Size(434, 24);
-            this.rb_OnlyNOK.TabIndex = 0;
+            this.rb_OnlyNOK.TabIndex = 1;
             this.rb_OnlyNOK.TabStop = true;
+            this.rb_OnlyNOK.Tag = "1";
             this.rb_OnlyNOK.Text = "NOK Images Only";
             this.rb_OnlyNOK.UseVisualStyleBackColor = true;
+            this.rb_OnlyNOK.Click += new System.EventHandler(this.RadioButtonClick);
             // 
             // rb_OnlyOK
             // 
@@ -94,8 +98,10 @@
             this.rb_OnlyOK.Size = new System.Drawing.Size(434, 24);
             this.rb_OnlyOK.TabIndex = 0;
             this.rb_OnlyOK.TabStop = true;
+            this.rb_OnlyOK.Tag = "0";
             this.rb_OnlyOK.Text = "OK Images Only";
             this.rb_OnlyOK.UseVisualStyleBackColor = true;
+            this.rb_OnlyOK.Click += new System.EventHandler(this.RadioButtonClick);
             // 
             // btn_Load
             // 

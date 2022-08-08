@@ -89,7 +89,6 @@ namespace CS_KEHRATEC
             bEditPrograms = false;
         }
     }
-
     public struct Password
     {
         public string sAdvisorPassword1;
@@ -101,6 +100,71 @@ namespace CS_KEHRATEC
         public bool bAdvisorPassword3_OK;
         public bool bSupervisorPassword_OK;
         public string sActUserName;
+    }
+    public struct RoboterData
+    {
+        public string sInspectionPlanName;
+        public int iTypNr;
+        public int iOptions;
+        public double dLength;
+        public double dWidth;
+        public double dHeight;
+        public double dDiameter;
+        public double dRotAngleVertAxis;
+        public double dRotAngleHorAxis;
+        public double dMaxRotAngle;
+        public double dMinRotAngle;
+        public int iGripperNr;
+        public int iGripperFingerNr;
+        public double dGrip_X;
+        public double dGrip_Y;
+        public double dGripAngleVertAxis;
+        public double dGripAngleHorAxis;
+        public double dGripHeight;
+        public double dGripDepth;
+        public int iMax_X;
+        public int iMax_Y;
+        public double dDistance_X;
+        public double dDistance_Y;
+        public double dWeight;
+        public int iPrismaSelect;
+
+        public void InitMesValues()
+        {
+            dGrip_X = 0.0;
+            dGrip_Y = 0.0;
+            dGripAngleVertAxis = 0.0;
+            dGripAngleHorAxis = 0.0;
+        }
+
+        public void Init()
+        {
+            sInspectionPlanName = "";
+            iTypNr = 0;
+            iOptions = 0;
+            dLength = 0.0;
+            dWidth = 0.0;
+            dHeight = 0.0;
+            dDiameter = 0.0;
+            dRotAngleVertAxis = 0.0;
+            dRotAngleHorAxis = 0.0;
+            dMaxRotAngle = 0.0;
+            dMinRotAngle = 0.0;
+            iGripperNr = 0;
+            iGripperFingerNr = 0;
+            dGrip_X = 0.0;
+            dGrip_Y = 0.0;
+            dGripAngleVertAxis = 0.0;
+            dGripAngleHorAxis = 0.0;
+            dGripHeight = 0.0;
+            dGripDepth = 0.0;
+            iMax_X = 0;
+            iMax_Y = 0;
+            dDistance_X = 0.0;
+            dDistance_Y = 0.0;
+            dWeight = 0.0;
+            iPrismaSelect = 0;
+        }
     }
 
 
@@ -116,7 +180,7 @@ namespace CS_KEHRATEC
        
         public static Password structPassword = new Password();
         public static Autorisation[] structAutorisation = new Autorisation[MAX_WORKER];
-
+        public static RoboterData structRoboterData= new RoboterData();
         public enum PasswordType { Advisor1,Advisor2,Advisor3, Supervisor };
 
 

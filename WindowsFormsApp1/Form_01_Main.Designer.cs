@@ -54,7 +54,7 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.btn_SavePictures = new System.Windows.Forms.Button();
-            this.button11 = new System.Windows.Forms.Button();
+            this.btn_LifePicture = new System.Windows.Forms.Button();
             this.button10 = new System.Windows.Forms.Button();
             this.button9 = new System.Windows.Forms.Button();
             this.button8 = new System.Windows.Forms.Button();
@@ -74,11 +74,19 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.label80 = new System.Windows.Forms.Label();
             this.lbl_UserLevel = new System.Windows.Forms.Label();
+            this.tabControl = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.menuStrip.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numUpDown_CamNr)).BeginInit();
             this.gb_Buttons.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.tabControl.SuspendLayout();
+            this.tabPage1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -247,7 +255,7 @@
             this.groupBox2.Controls.Add(this.button2);
             this.groupBox2.Controls.Add(this.button1);
             this.groupBox2.Controls.Add(this.btn_SavePictures);
-            this.groupBox2.Controls.Add(this.button11);
+            this.groupBox2.Controls.Add(this.btn_LifePicture);
             this.groupBox2.Controls.Add(this.button10);
             this.groupBox2.Controls.Add(this.button9);
             this.groupBox2.Controls.Add(this.button8);
@@ -309,17 +317,18 @@
             this.btn_SavePictures.UseVisualStyleBackColor = false;
             this.btn_SavePictures.Click += new System.EventHandler(this.btn_SavePictures_Click);
             // 
-            // button11
+            // btn_LifePicture
             // 
-            this.button11.BackColor = System.Drawing.Color.LightGray;
-            this.button11.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button11.Image = ((System.Drawing.Image)(resources.GetObject("button11.Image")));
-            this.button11.Location = new System.Drawing.Point(60, 10);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(48, 48);
-            this.button11.TabIndex = 50;
-            this.button11.Tag = "1";
-            this.button11.UseVisualStyleBackColor = false;
+            this.btn_LifePicture.BackColor = System.Drawing.Color.LightGray;
+            this.btn_LifePicture.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_LifePicture.Image = ((System.Drawing.Image)(resources.GetObject("btn_LifePicture.Image")));
+            this.btn_LifePicture.Location = new System.Drawing.Point(60, 10);
+            this.btn_LifePicture.Name = "btn_LifePicture";
+            this.btn_LifePicture.Size = new System.Drawing.Size(48, 48);
+            this.btn_LifePicture.TabIndex = 50;
+            this.btn_LifePicture.Tag = "1";
+            this.btn_LifePicture.UseVisualStyleBackColor = false;
+            this.btn_LifePicture.Click += new System.EventHandler(this.btn_LifePicture_Click);
             // 
             // button10
             // 
@@ -474,6 +483,7 @@
             this.btn_InspectionPlanLoad.Size = new System.Drawing.Size(48, 48);
             this.btn_InspectionPlanLoad.TabIndex = 37;
             this.btn_InspectionPlanLoad.UseVisualStyleBackColor = true;
+            this.btn_InspectionPlanLoad.Click += new System.EventHandler(this.btn_InspectionPlanLoad_Click);
             // 
             // btn_InspectionPlanEdit
             // 
@@ -536,12 +546,79 @@
             this.lbl_UserLevel.TabIndex = 19;
             this.lbl_UserLevel.Text = "Userlevel";
             // 
+            // tabControl
+            // 
+            this.tabControl.Controls.Add(this.tabPage1);
+            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPage3);
+            this.tabControl.Controls.Add(this.tabPage4);
+            this.tabControl.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tabControl.ItemSize = new System.Drawing.Size(55, 21);
+            this.tabControl.Location = new System.Drawing.Point(6, 98);
+            this.tabControl.Name = "tabControl";
+            this.tabControl.SelectedIndex = 0;
+            this.tabControl.Size = new System.Drawing.Size(877, 652);
+            this.tabControl.TabIndex = 18;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tabPage1.Location = new System.Drawing.Point(4, 25);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(869, 623);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Image";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.BackColor = System.Drawing.SystemColors.Control;
+            this.groupBox1.Location = new System.Drawing.Point(3, 4);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(863, 617);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tabPage2.Location = new System.Drawing.Point(4, 25);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(869, 623);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "All Images";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // tabPage3
+            // 
+            this.tabPage3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tabPage3.Location = new System.Drawing.Point(4, 25);
+            this.tabPage3.Name = "tabPage3";
+            this.tabPage3.Size = new System.Drawing.Size(869, 623);
+            this.tabPage3.TabIndex = 2;
+            this.tabPage3.Text = "Value";
+            this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tabPage4.Location = new System.Drawing.Point(4, 25);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Size = new System.Drawing.Size(869, 623);
+            this.tabPage4.TabIndex = 3;
+            this.tabPage4.Text = "Manual Function";
+            this.tabPage4.UseVisualStyleBackColor = true;
+            // 
             // Form_01_Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1270, 841);
             this.ControlBox = false;
+            this.Controls.Add(this.tabControl);
             this.Controls.Add(this.gb_Buttons);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.menuStrip);
@@ -558,6 +635,8 @@
             this.gb_Buttons.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.tabControl.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -605,11 +684,17 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button btn_SavePictures;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button btn_LifePicture;
         private System.Windows.Forms.GroupBox gb_Buttons;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label lbl_UserLevel;
         private System.Windows.Forms.Label label80;
+        private System.Windows.Forms.TabControl tabControl;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPage3;
+        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }
 

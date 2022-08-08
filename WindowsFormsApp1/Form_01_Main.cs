@@ -33,16 +33,6 @@ namespace CS_KEHRATEC
         }
 
 
-        private bool ProofRunState()
-        {
-            if (ClassDaten.structSystemData.bRunState)
-            {
-                MessageBox.Show("Please push the STOP - Button first!!!");
-                return true;
-
-            }
-            return false;
-        }
 
         private void Menue_Help_Information_Click(object sender, EventArgs e)
         {
@@ -197,6 +187,50 @@ namespace CS_KEHRATEC
 
         }
 
+        private void btn_LifePicture_Click(object sender, EventArgs e)
+        {
+            if (!ProofRunState())
+            {
+                tabControl.SelectedIndex = 0;
+                ClassDaten.structSystemData.bLifeImageFlag = !ClassDaten.structSystemData.bLifeImageFlag;
+                if (ClassDaten.structSystemData.bLifeImageFlag)
+                {
+                    btn_LifePicture.BackColor = Color.Red;
+                }
+                else
+                    btn_LifePicture.BackColor = Color.LightGray;
+            }
+            else
+            {
+                ClassDaten.structSystemData.bLifeImageFlag = false;
+                btn_LifePicture.BackColor = Color.LightGray;
+            }
+        }
+
+        private bool ProofRunState()
+        {
+            if (ClassDaten.structSystemData.bRunState)
+            {
+                MessageBox.Show("Please push the Stop- Button first!!!");
+                return true;
+            }
+            else
+               return false;
+
+        }
+
+        private void btn_InspectionPlanLoad_Click(object sender, EventArgs e)
+        {
+            //if (IsAllowed((int)ClassDaten.PasswordType.Advisor1))
+            //{
+                Form_02_InspectionPlanLoad form_02_InspectionPlanLoad = new Form_02_InspectionPlanLoad();
+                form_02_InspectionPlanLoad.ShowDialog();
+                ClassDaten.structSystemData.iRequestedTyp = ClassDaten.structRoboterData.iTypNr;
+
+                    
+
+           // }
+        }
     }
 
 }
