@@ -173,6 +173,7 @@ namespace CS_KEHRATEC
 
         public static string sHELP_PATH = "..\\..\\..\\..\\VisionControl\\Help\\";
         public static string sDATA_PATH = "..\\..\\..\\..\\VisionControl\\Data\\";
+        public static string sMESSAGE_PATH = "..\\..\\..\\..\\VisionControl\\Messages\\";
         public const int MAX_WORKER = 12;
 
         public static SystemData structSystemData= new SystemData();
