@@ -15,9 +15,7 @@ namespace CS_KEHRATEC
 
         Form_06_SavePictureSelect formPictureSelect = new Form_06_SavePictureSelect();
 
-
-        Form_30_Messages formMessages = new Form_30_Messages();
-
+        Form_30_Messages formMessages = new Form_30_Messages(ref ClassDaten.ushOldErrorData);
 
         public Form_01_Main()
         {
@@ -31,7 +29,6 @@ namespace CS_KEHRATEC
                 this.Close();
             }
         }
-
 
 
         private void Menue_Help_Information_Click(object sender, EventArgs e)
@@ -51,7 +48,6 @@ namespace CS_KEHRATEC
 
         }
 
-
         private void digitalInputToolStripMenuItem1_Click(object sender, EventArgs e)
         {
 
@@ -67,7 +63,6 @@ namespace CS_KEHRATEC
         {
 
         }
-
 
 
         private void btn_BDE_Click(object sender, EventArgs e)
@@ -127,8 +122,6 @@ namespace CS_KEHRATEC
 
 
         }
-
-
 
         private void ShowPasswordLevel()
         {

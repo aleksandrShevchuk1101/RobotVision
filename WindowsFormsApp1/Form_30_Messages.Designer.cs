@@ -36,6 +36,7 @@
             this.State = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Messagetext = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.btn_Close = new System.Windows.Forms.Button();
+            this.btn_Clear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ListView
@@ -50,6 +51,7 @@
             this.ListView.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ListView.GridLines = true;
             this.ListView.HideSelection = false;
+            this.ListView.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.ListView.Location = new System.Drawing.Point(12, 82);
             this.ListView.Name = "ListView";
             this.ListView.Size = new System.Drawing.Size(886, 381);
@@ -60,22 +62,22 @@
             // Type
             // 
             this.Type.Text = "Type";
-            this.Type.Width = 82;
+            this.Type.Width = 90;
             // 
             // Date
             // 
             this.Date.Text = "Date";
-            this.Date.Width = 71;
+            this.Date.Width = 86;
             // 
             // Time
             // 
             this.Time.Text = "Time";
-            this.Time.Width = 81;
+            this.Time.Width = 100;
             // 
             // State
             // 
             this.State.Text = "State";
-            this.State.Width = 102;
+            this.State.Width = 114;
             // 
             // Messagetext
             // 
@@ -92,6 +94,15 @@
             this.btn_Close.TabIndex = 77;
             this.btn_Close.Click += new System.EventHandler(this.btn_Close_Click);
             // 
+            // btn_Clear
+            // 
+            this.btn_Clear.Image = ((System.Drawing.Image)(resources.GetObject("btn_Clear.Image")));
+            this.btn_Clear.Location = new System.Drawing.Point(783, 12);
+            this.btn_Clear.Name = "btn_Clear";
+            this.btn_Clear.Size = new System.Drawing.Size(48, 48);
+            this.btn_Clear.TabIndex = 81;
+            this.btn_Clear.Click += new System.EventHandler(this.btn_Clear_Click);
+            // 
             // Form_30_Messages
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -99,6 +110,7 @@
             this.ClientSize = new System.Drawing.Size(914, 479);
             this.ControlBox = false;
             this.Controls.Add(this.ListView);
+            this.Controls.Add(this.btn_Clear);
             this.Controls.Add(this.btn_Close);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.Fixed3D;
             this.Name = "Form_30_Messages";
@@ -117,5 +129,6 @@
         private System.Windows.Forms.ColumnHeader State;
         private System.Windows.Forms.ColumnHeader Messagetext;
         private System.Windows.Forms.Button btn_Close;
+        private System.Windows.Forms.Button btn_Clear;
     }
 }

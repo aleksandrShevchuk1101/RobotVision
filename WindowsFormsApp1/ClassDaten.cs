@@ -175,6 +175,7 @@ namespace CS_KEHRATEC
         public static string sDATA_PATH = "..\\..\\..\\..\\VisionControl\\Data\\";
         public static string sMESSAGE_PATH = "..\\..\\..\\..\\VisionControl\\Messages\\";
         public const int MAX_WORKER = 12;
+        public static int MAX_ERROR_WORDS = 2;
 
         public static SystemData structSystemData= new SystemData();
 
@@ -187,6 +188,9 @@ namespace CS_KEHRATEC
 
 
         public static string DEFAULT_PASSWORD = "*KEHRATEC*";
+
+
+        public static ushort[] ushOldErrorData = new ushort[MAX_ERROR_WORDS];
        
 
 
